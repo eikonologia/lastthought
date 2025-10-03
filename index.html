@@ -25,9 +25,22 @@
       padding: 30px 20px;
       line-height: 1.5;
     }
+    .header {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      object-fit: contain;
+    }
     h1 {
-      font-size: 2.6rem;
-      margin: 0 0 15px;
+      font-size: 2.4rem;
+      margin: 0;
       font-weight: 300;
     }
     .counter {
@@ -128,7 +141,12 @@
   </style>
 </head>
 <body>
-  <h1 id="title">Your Thought</h1>
+  <div class="header">
+    <a href="https://eikonologia.com/" target="_blank">
+      <img src="https://raw.githubusercontent.com/eikonologia/yourthought/main/yourthought.png" alt="Your Thought" class="logo">
+    </a>
+    <h1 id="title">Your Thought</h1>
+  </div>
   
   <div class="experiment" id="experiment">
     This is a social media experiment:<br>
@@ -139,8 +157,7 @@
 
   <div class="counter" id="counter"><strong>9,999 thoughts remaining</strong></div>
 
-  <!-- ⚠️ ERSETZE MIT DEINEM $7 STRIPE-LINK -->
-  <a href="https://buy.stripe.com/DEIN_NEUER_LINK_HIER" target="_blank" class="btn" id="pay-btn">Secure your place — $7</a>
+  <a href="https://buy.stripe.com/8x228qadGaBX5Pl6FkbQY01" target="_blank" class="btn" id="pay-btn">Secure your place — $7</a>
 
   <div class="instructions" id="instructions">
     After payment, email your thought to 
