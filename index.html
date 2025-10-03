@@ -19,6 +19,22 @@
       margin: 0 0 20px;
       font-weight: 300;
     }
+    .thoughts {
+      margin: 40px auto;
+      max-width: 600px;
+      border-top: 1px solid #333;
+      padding-top: 30px;
+    }
+    .thought {
+      font-size: 1.3rem;
+      margin: 20px 0;
+      opacity: 0.9;
+    }
+    .counter {
+      font-size: 1.2rem;
+      margin: 20px 0;
+      font-weight: 300;
+    }
     .btn {
       display: inline-block;
       background: #fff;
@@ -33,16 +49,34 @@
     .btn:hover {
       transform: scale(1.05);
     }
+    .purpose {
+      max-width: 500px;
+      margin: 30px auto;
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
   <h1>Leave one thought. Forever.</h1>
-  <p>Only 10,000 human thoughts will ever fit here.<br>After that, the collective mind goes silent.</p>
-  <p><strong>9,999 thoughts remaining</strong></p>
-  <p>What’s the one thing you’d want to leave behind?</p>
   
+  <p>Only 10,000 human thoughts will ever be preserved here.<br>
+  After that, the page closes — forever.</p>
+
+  <div class="counter"><strong>9,999 spots left</strong></div>
+
+  <p>Write the one sentence you’d want to leave behind.<br>
+  After payment, it will be added here — <strong>public, permanent, uneditable</strong>.</p>
+
   <a href="https://buy.stripe.com/14A00i5XqcK52D91l0bQY00" class="btn">Secure your place — $5</a>
-  
-  <p>All proceeds support initiatives that help people feel less alone in their thoughts.</p>
+
+  <div class="thoughts">
+    <div class="thought">"I existed. And for a moment, I was heard." — Alex, 2024</div>
+  </div>
+
+  <p class="purpose">
+    All proceeds fund free mental health support for young people feeling isolated online.<br>
+    Every thought stays. Every dollar helps.
+  </p>
 </body>
 </html>
