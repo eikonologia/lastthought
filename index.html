@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="A social media experiment: Can 10,000 people pay $7 — the number of luck and wholeness — for something with no personal value except being part of a shared human thought?">
   
-  <!-- Open Graph / Social Media Preview – nutzt DASSELBE Bild wie das Logo -->
+  <!-- Open Graph / Social Media Preview -->
   <meta property="og:title" content="Your Thought">
   <meta property="og:description" content="A social media experiment: Can 10,000 people pay $7 — the number of luck and wholeness — for something with no personal value except being part of a shared human thought?">
   <meta property="og:image" content="https://raw.githubusercontent.com/eikonologia/yourthought/main/yourthought.jpg">
@@ -26,16 +26,16 @@
       line-height: 1.5;
     }
     .logo-container {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
     .logo {
       width: 120px;
       height: 120px;
-      border-radius: 8px;
+      border-radius: 12px;
       object-fit: contain;
     }
     h1 {
-      font-size: 3.0rem;
+      font-size: 2.8rem;
       margin: 0;
       font-weight: 300;
     }
@@ -86,6 +86,40 @@
       font-size: 1.15rem;
       opacity: 0.92;
       line-height: 1.6;
+    }
+    .share-section {
+      margin: 35px 0;
+    }
+    .share-text {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .share-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .share-btn:hover {
+      background: #ff6b35;
+      transform: scale(1.1);
     }
     .thoughts-grid {
       display: grid;
@@ -138,7 +172,6 @@
 </head>
 <body>
   <div class="logo-container">
-    <!-- Dasselbe Bild wie im Social-Media-Vorschaubild -->
     <img src="https://raw.githubusercontent.com/eikonologia/yourthought/main/yourthought.jpg" alt="Your Thought" class="logo">
   </div>
   
@@ -161,6 +194,23 @@
        class="email" 
        target="_blank">photo@eikonologia.com</a> 
     to have it added permanently.
+  </div>
+
+  <!-- Teilen-Abschnitt -->
+  <div class="share-section">
+    <div class="share-text">
+      To make this experiment a success, I need YOUR thought.<br>
+      Share it with someone who might add theirs.
+    </div>
+    <div class="share-buttons">
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://eikonologia.github.io/yourthought/" class="share-btn" target="_blank" title="Share on Facebook">f</a>
+      <a href="https://twitter.com/intent/tweet?url=https://eikonologia.github.io/yourthought/&text=Join%20the%20Your%20Thought%20experiment%20%E2%80%93%20pay%20%247%20to%20leave%20a%20thought%20forever." class="share-btn" target="_blank" title="Share on Twitter/X">x</a>
+      <a href="https://wa.me/?text=Join%20the%20Your%20Thought%20experiment%3A%20https://eikonologia.github.io/yourthought/" class="share-btn" target="_blank" title="Share on WhatsApp">w</a>
+      <a href="https://www.reddit.com/submit?url=https://eikonologia.github.io/yourthought/&title=Your%20Thought%20%E2%80%93%20A%20social%20media%20experiment" class="share-btn" target="_blank" title="Share on Reddit">r</a>
+      <a href="https://t.me/share/url?url=https://eikonologia.github.io/yourthought/&text=Join%20the%20Your%20Thought%20experiment" class="share-btn" target="_blank" title="Share on Telegram">t</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://eikonologia.github.io/yourthought/" class="share-btn" target="_blank" title="Share on LinkedIn">in</a>
+      <a href="https://www.tiktok.com/" class="share-btn" target="_blank" title="Share on TikTok" style="background:#000;">t</a>
+    </div>
   </div>
 
   <div class="thoughts-grid" id="thoughts-grid">
@@ -186,7 +236,7 @@
   </footer>
 
   <script>
-    // Pong-Spiel (wie vorher – unverändert)
+    // Vollständiges, mobile-fähiges Pong mit Level alle 3 Punkte
     function openPong() {
       const pongHTML = `
         <!DOCTYPE html>
@@ -290,15 +340,8 @@
       win.document.close();
     }
 
-    // Übersetzungen (gekürzt für Übersicht – vollständig wie vorher)
+    // Übersetzungen
     const translations = {
-      en: {
-        title: "Your Thought",
-        experiment: "This is a social media experiment:<br>Can 10,000 people pay $7 — the number of luck and wholeness —<br>for something that gives them nothing back,<br>except a permanent place in a shared human thought?",
-        counter: "<strong>9,999 thoughts remaining</strong>",
-        payBtn: "Secure your place — $7",
-        instructions: "After payment, email your thought to <a href='mailto:photo@eikonologia.com?subject=My Thought for Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> to have it added permanently."
-      },
       de: {
         title: "Dein Gedanke",
         experiment: "Dies ist ein Social-Media-Experiment:<br>Können 10.000 Menschen 7 $ zahlen –<br>die Zahl des Glücks und der Ganzheit –<br>für etwas, das ihnen nichts zurückgibt,<br>außer einem dauerhaften Platz in einem gemeinsamen menschlichen Gedanken?",
@@ -306,7 +349,55 @@
         payBtn: "Platz sichern — 7 $",
         instructions: "Sende deinen Gedanken nach der Zahlung per E-Mail an <a href='mailto:photo@eikonologia.com?subject=Mein Gedanke für Your Thought' class='email' target='_blank'>photo@eikonologia.com</a>, um ihn dauerhaft hinzuzufügen."
       },
-      // ... (andere Sprachen wie vorher – vollständig im vorherigen Code)
+      en: {
+        title: "Your Thought",
+        experiment: "This is a social media experiment:<br>Can 10,000 people pay $7 — the number of luck and wholeness —<br>for something that gives them nothing back,<br>except a permanent place in a shared human thought?",
+        counter: "<strong>9,999 thoughts remaining</strong>",
+        payBtn: "Secure your place — $7",
+        instructions: "After payment, email your thought to <a href='mailto:photo@eikonologia.com?subject=My Thought for Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> to have it added permanently."
+      },
+      es: {
+        title: "Tu Pensamiento",
+        experiment: "Este es un experimento en redes sociales:<br>¿Pueden 10.000 personas pagar 7 $ — el número de la suerte y la plenitud —<br>por algo que no les da nada a cambio,<br>excepto un lugar permanente en un pensamiento humano compartido?",
+        counter: "<strong>Quedan 9.999 pensamientos</strong>",
+        payBtn: "Asegura tu lugar — 7 $",
+        instructions: "Después del pago, envía tu pensamiento por correo a <a href='mailto:photo@eikonologia.com?subject=Mi pensamiento para Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> para que se añada permanentemente."
+      },
+      fr: {
+        title: "Ta Pensée",
+        experiment: "Ceci est une expérience sur les réseaux sociaux :<br>10 000 personnes peuvent-elles payer 7 $ — le chiffre de la chance et de l’accomplissement —<br>pour quelque chose qui ne leur rapporte rien,<br>sauf une place permanente dans une pensée humaine partagée ?",
+        counter: "<strong>9 999 pensées restantes</strong>",
+        payBtn: "Réserve ta place — 7 $",
+        instructions: "Après le paiement, envoie ta pensée par e-mail à <a href='mailto:photo@eikonologia.com?subject=Ma pensée pour Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> pour qu’elle soit ajoutée de façon permanente."
+      },
+      el: {
+        title: "Η Σκέψη Σου",
+        experiment: "Αυτό είναι ένα πείραμα στα social media:<br>Μπορούν 10.000 άνθρωποι να πληρώσουν 7 $ — ο αριθμός της τύχης και της πληρότητας —<br>για κάτι που δεν τους δίνει τίποτα,<br>εκτός από μια μόνιμη θέση σε μια κοινή ανθρώπινη σκέψη;",
+        counter: "<strong>Απομένουν 9.999 σκέψεις</strong>",
+        payBtn: "Δέσμευσε τη θέση σου — 7 $",
+        instructions: "Μετά την πληρωμή, στείλε τη σκέψη σου με email στο <a href='mailto:photo@eikonologia.com?subject=Η σκέψη μου για το Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> για να προστεθεί μόνιμα."
+      },
+      tr: {
+        title: "Düşüncen",
+        experiment: "Bu bir sosyal medya deneyidir:<br>10.000 kişi, karşılığında hiçbir şey almadan,<br>ortak bir insan düşüncesinde kalıcı bir yer için<br>7 $ — şans ve bütünlüğün sayısı — ödeyebilir mi?",
+        counter: "<strong>9.999 düşünce kaldı</strong>",
+        payBtn: "Yerini güvence altına al — 7 $",
+        instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <a href='mailto:photo@eikonologia.com?subject=Düşüncem Your Thought için' class='email' target='_blank'>photo@eikonologia.com</a> adresine e-posta gönder."
+      },
+      ja: {
+        title: "あなたの思考",
+        experiment: "これはソーシャルメディア実験です：<br>10,000人が、見返りなしで、<br>共有された人間の思考の中に永久的な場所を得るために<br>7ドル（幸運と完全性の数字）を払えるでしょうか？",
+        counter: "<strong>残り9,999の思考</strong>",
+        payBtn: "あなたの場所を確保 — 7ドル",
+        instructions: "支払い後、あなたの思考を永久に追加するために、<a href='mailto:photo@eikonologia.com?subject=Your Thoughtへの私の思考' class='email' target='_blank'>photo@eikonologia.com</a> までメールしてください。"
+      },
+      zh: {
+        title: "你的想法",
+        experiment: "这是一个社交媒体实验：<br>10,000人是否愿意支付7美元——<br>幸运与圆满的数字——<br>只为在人类共同的思想中获得一个永久的位置，而别无回报？",
+        counter: "<strong>还剩 9,999 个想法</strong>",
+        payBtn: "锁定你的位置 — 7 美元",
+        instructions: "付款后，请将你的想法通过电子邮件发送至 <a href='mailto:photo@eikonologia.com?subject=我的想法 for Your Thought' class='email' target='_blank'>photo@eikonologia.com</a>，我们将永久添加它。"
+      }
     };
 
     function getBrowserLang() {
