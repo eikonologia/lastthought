@@ -74,6 +74,20 @@
       background: rgba(255,255,255,0.03);
       border-radius: 4px;
     }
+    .lang-switch {
+      margin: 25px 0;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+    .lang-switch a {
+      color: #aaa;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+    .lang-switch a.active {
+      color: #fff;
+      text-decoration: underline;
+    }
     footer {
       margin-top: 50px;
       font-size: 0.85rem;
@@ -90,19 +104,19 @@
   </style>
 </head>
 <body>
-  <h1>Your Thought</h1>
+  <h1 id="title">Your Thought</h1>
   
-  <div class="experiment">
+  <div class="experiment" id="experiment">
     This is a social experiment:<br>
     Can 10,000 people pay $5 for something that gives them nothing back —<br>
     except a permanent place in a shared human thought?
   </div>
 
-  <div class="counter"><strong>9,999 thoughts remaining</strong></div>
+  <div class="counter" id="counter"><strong>9,999 thoughts remaining</strong></div>
 
-  <a href="https://buy.stripe.com/14A00i5XqcK52D91l0bQY00" target="_blank" class="btn">Secure your place — $5</a>
+  <a href="https://buy.stripe.com/14A00i5XqcK52D91l0bQY00" target="_blank" class="btn" id="pay-btn">Secure your place — $5</a>
 
-  <div class="instructions">
+  <div class="instructions" id="instructions">
     After payment, email your thought to <span class="email">photo@eikonologia.com</span> to have it added permanently.
   </div>
 
@@ -111,6 +125,17 @@
   </div>
 
   <a href="javascript:void(0)" onclick="openPong()" class="btn" style="background:#333;">Play Pong</a>
+
+  <div class="lang-switch" id="lang-switch">
+    <a href="#" data-lang="de">🇩🇪 DE</a>
+    <a href="#" data-lang="en">🇬🇧 EN</a>
+    <a href="#" data-lang="es">🇪🇸 ES</a>
+    <a href="#" data-lang="fr">🇫🇷 FR</a>
+    <a href="#" data-lang="el">🇬🇷 EL</a>
+    <a href="#" data-lang="tr">🇹🇷 TR</a>
+    <a href="#" data-lang="ja">🇯🇵 JA</a>
+    <a href="#" data-lang="zh">🇨🇳 ZH</a>
+  </div>
 
   <footer>
     <a href="privacy.html">Privacy</a>
@@ -144,37 +169,26 @@
           document.addEventListener('keydown', e => keys[e.key] = true);
           document.addEventListener('keyup', e => keys[e.key] = false);
           function update() {
-            // Level-Up alle 5 Punkte
             speedLevel = Math.floor(score / 5) + 1;
             ball.dx = (ball.dx > 0 ? 1 : -1) * (5 + speedLevel * 0.8);
             ball.dy = (ball.dy > 0 ? 1 : -1) * (3 + speedLevel * 0.5);
-            // Spieler
             if (keys['ArrowUp'] || keys['w']) player.y -= player.speed;
             if (keys['ArrowDown'] || keys['s']) player.y += player.speed;
             player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
-            // KI
             const aiCenter = ai.y + ai.height/2;
             if (aiCenter < ball.y - 10) ai.y += ai.speed + speedLevel * 0.3;
             if (aiCenter > ball.y + 10) ai.y -= ai.speed + speedLevel * 0.3;
             ai.y = Math.max(0, Math.min(canvas.height - ai.height, ai.y));
-            // Ball
             ball.x += ball.dx;
             ball.y += ball.dy;
             if (ball.y <= 0 || ball.y >= canvas.height - ball.size) ball.dy *= -1;
-            // Spieler-Paddle
-            if (ball.x <= player.x + player.width && 
-                ball.y >= player.y && 
-                ball.y <= player.y + player.height) {
+            if (ball.x <= player.x + player.width && ball.y >= player.y && ball.y <= player.y + player.height) {
               ball.dx = Math.abs(ball.dx);
               score++;
             }
-            // KI-Paddle
-            if (ball.x >= ai.x - ball.size && 
-                ball.y >= ai.y && 
-                ball.y <= ai.y + ai.height) {
+            if (ball.x >= ai.x - ball.size && ball.y >= ai.y && ball.y <= ai.y + ai.height) {
               ball.dx = -Math.abs(ball.dx);
             }
-            // Reset bei Punktverlust
             if (ball.x < 0) {
               ball.x = canvas.width/2;
               ball.y = canvas.height/2;
@@ -185,7 +199,6 @@
               score = 0;
               speedLevel = 1;
             }
-            // Zeichnen
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#fff';
@@ -209,6 +222,105 @@
       win.document.write(pongHTML);
       win.document.close();
     }
+
+    // Übersetzungen (8 Sprachen)
+    const translations = {
+      de: {
+        title: "Dein Gedanke",
+        experiment: "Dies ist ein soziales Experiment:<br>Können 10.000 Menschen 5 $ zahlen –<br>für etwas, das ihnen nichts zurückgibt,<br>außer einem dauerhaften Platz in einem gemeinsamen menschlichen Gedanken?",
+        counter: "<strong>Noch 9.999 Gedanken frei</strong>",
+        payBtn: "Platz sichern — 5 $",
+        instructions: "Sende deinen Gedanken nach der Zahlung per E-Mail an <span class='email'>photo@eikonologia.com</span>, um ihn dauerhaft hinzuzufügen."
+      },
+      en: {
+        title: "Your Thought",
+        experiment: "This is a social experiment:<br>Can 10,000 people pay $5 for something that gives them nothing back —<br>except a permanent place in a shared human thought?",
+        counter: "<strong>9,999 thoughts remaining</strong>",
+        payBtn: "Secure your place — $5",
+        instructions: "After payment, email your thought to <span class='email'>photo@eikonologia.com</span> to have it added permanently."
+      },
+      es: {
+        title: "Tu Pensamiento",
+        experiment: "Este es un experimento social:<br>¿Pueden 10.000 personas pagar 5 $ por algo que no les da nada a cambio,<br>excepto un lugar permanente en un pensamiento humano compartido?",
+        counter: "<strong>Quedan 9.999 pensamientos</strong>",
+        payBtn: "Asegura tu lugar — 5 $",
+        instructions: "Después del pago, envía tu pensamiento por correo a <span class='email'>photo@eikonologia.com</span> para que se añada permanentemente."
+      },
+      fr: {
+        title: "Ta Pensée",
+        experiment: "Ceci est une expérience sociale :<br>10 000 personnes peuvent-elles payer 5 $ pour quelque chose qui ne leur rapporte rien,<br>sauf une place permanente dans une pensée humaine partagée ?",
+        counter: "<strong>9 999 pensées restantes</strong>",
+        payBtn: "Réserve ta place — 5 $",
+        instructions: "Après le paiement, envoie ta pensée par e-mail à <span class='email'>photo@eikonologia.com</span> pour qu’elle soit ajoutée de façon permanente."
+      },
+      el: {
+        title: "Η Σκέψη Σου",
+        experiment: "Αυτό είναι ένα κοινωνικό πείραμα:<br>Μπορούν 10.000 άνθρωποι να πληρώσουν 5 $ για κάτι που δεν τους δίνει τίποτα,<br>εκτός από μια μόνιμη θέση σε μια κοινή ανθρώπινη σκέψη;",
+        counter: "<strong>Απομένουν 9.999 σκέψεις</strong>",
+        payBtn: "Δέσμευσε τη θέση σου — 5 $",
+        instructions: "Μετά την πληρωμή, στείλε τη σκέψη σου με email στο <span class='email'>photo@eikonologia.com</span> για να προστεθεί μόνιμα."
+      },
+      tr: {
+        title: "Düşüncen",
+        experiment: "Bu bir sosyal deney:<br>10.000 kişi, karşılığında hiçbir şey almadan,<br>ortak bir insan düşüncesinde kalıcı bir yer için 5 $ ödeyebilir mi?",
+        counter: "<strong>9.999 düşünce kaldı</strong>",
+        payBtn: "Yerini güvence altına al — 5 $",
+        instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <span class='email'>photo@eikonologia.com</span> adresine e-posta gönder."
+      },
+      ja: {
+        title: "あなたの思考",
+        experiment: "これは社会実験です：<br>10,000人が、見返りなしで、<br>共有された人間の思考の中に永久的な場所を得るために5ドルを払えるでしょうか？",
+        counter: "<strong>残り9,999の思考</strong>",
+        payBtn: "あなたの場所を確保 — 5ドル",
+        instructions: "支払い後、あなたの思考を永久に追加するために、<span class='email'>photo@eikonologia.com</span> までメールしてください。"
+      },
+      zh: {
+        title: "你的想法",
+        experiment: "这是一个社会实验：<br>10,000人是否愿意支付5美元，<br>只为在人类共同的思想中获得一个永久的位置，而别无回报？",
+        counter: "<strong>还剩 9,999 个想法</strong>",
+        payBtn: "锁定你的位置 — 5 美元",
+        instructions: "付款后，请将你的想法通过电子邮件发送至 <span class='email'>photo@eikonologia.com</span>，我们将永久添加它。"
+      }
+    };
+
+    function getBrowserLang() {
+      const lang = (navigator.language || navigator.userLanguage).split('-')[0];
+      return ['de','en','es','fr','el','tr','ja','zh'].includes(lang) ? lang : 'en';
+    }
+
+    let currentLang = localStorage.getItem('lang') || getBrowserLang();
+
+    function updateContent() {
+      const t = translations[currentLang];
+      document.getElementById('title').textContent = t.title;
+      document.getElementById('experiment').innerHTML = t.experiment;
+      document.getElementById('counter').innerHTML = t.counter;
+      document.getElementById('pay-btn').textContent = t.payBtn;
+      document.getElementById('instructions').innerHTML = t.instructions;
+
+      const emailSpan = document.querySelector('.email');
+      if (emailSpan) {
+        emailSpan.textContent = "photo@eikonologia.com";
+        emailSpan.style.color = "#fff";
+        emailSpan.style.textDecoration = "underline";
+        emailSpan.style.fontWeight = "bold";
+      }
+
+      document.querySelectorAll('#lang-switch a').forEach(a => {
+        a.classList.toggle('active', a.dataset.lang === currentLang);
+      });
+    }
+
+    document.querySelectorAll('#lang-switch a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentLang = a.dataset.lang;
+        localStorage.setItem('lang', currentLang);
+        updateContent();
+      });
+    });
+
+    updateContent();
   </script>
 </body>
 </html>
