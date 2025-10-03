@@ -113,12 +113,7 @@
   </div>
 
   <div class="thoughts-grid" id="thoughts-grid">
-    <div class="thought-item">#0001 "I existed."</div>
-    <div class="thought-item">#0002 "You are not alone."</div>
-    <div class="thought-item">#0003 "Breathe."</div>
-    <div class="thought-item">#0004 "This matters."</div>
-    <div class="thought-item">#0005 "Keep going."</div>
-    <div class="thought-item">#0006 "Hope is quiet."</div>
+    <!-- Gedanken werden hier manuell eingefügt -->
   </div>
 
   <a href="javascript:void(0)" onclick="openPong()" class="btn" style="background:#333;">Play Pong</a>
@@ -134,13 +129,13 @@
     <a href="#" data-lang="zh">🇨🇳 ZH</a>
   </div>
 
-  <footer>
+  <footer id="footer">
     This project costs $0 to run. No ads. No tracking. No investors.<br>
     Built with care by eikonologia.
   </footer>
 
   <script>
-    // Pong-Spiel in neuem Tab
+    // Verbessertes Pong mit KI-Gegner
     function openPong() {
       const pongHTML = `
         <!DOCTYPE html>
@@ -155,44 +150,66 @@
           canvas.height = window.innerHeight;
           let score = 0;
           let highscore = localStorage.getItem('pongHighscore') || 0;
-          const paddle = { x: 20, y: canvas.height/2 - 40, width: 10, height: 80, speed: 8 };
-          const ball = { x: canvas.width/2, y: canvas.height/2, size: 10, dx: 5, dy: 3 };
+          const paddleHeight = 100;
+          const paddleWidth = 10;
+          const ballSize = 10;
+          const player = { x: 20, y: canvas.height/2 - paddleHeight/2, width: paddleWidth, height: paddleHeight, speed: 8 };
+          const ai = { x: canvas.width - 30, y: canvas.height/2 - paddleHeight/2, width: paddleWidth, height: paddleHeight, speed: 6 };
+          const ball = { x: canvas.width/2, y: canvas.height/2, size: ballSize, dx: 5, dy: 3 };
           let keys = {};
           document.addEventListener('keydown', e => keys[e.key] = true);
           document.addEventListener('keyup', e => keys[e.key] = false);
           function update() {
-            // Paddle control
-            if (keys['ArrowUp'] || keys['w']) paddle.y -= paddle.speed;
-            if (keys['ArrowDown'] || keys['s']) paddle.y += paddle.speed;
-            paddle.y = Math.max(0, Math.min(canvas.height - paddle.height, paddle.y));
-            // Ball movement
+            // Spieler-Steuerung
+            if (keys['ArrowUp'] || keys['w']) player.y -= player.speed;
+            if (keys['ArrowDown'] || keys['s']) player.y += player.speed;
+            player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
+            // KI folgt dem Ball
+            const aiCenter = ai.y + ai.height/2;
+            if (aiCenter < ball.y - 10) ai.y += ai.speed;
+            if (aiCenter > ball.y + 10) ai.y -= ai.speed;
+            ai.y = Math.max(0, Math.min(canvas.height - ai.height, ai.y));
+            // Ball
             ball.x += ball.dx;
             ball.y += ball.dy;
-            // Wall bounce
             if (ball.y <= 0 || ball.y >= canvas.height - ball.size) ball.dy *= -1;
-            // Paddle bounce
-            if (ball.x <= paddle.x + paddle.width && 
-                ball.y >= paddle.y && 
-                ball.y <= paddle.y + paddle.height) {
+            // Spieler-Paddle
+            if (ball.x <= player.x + player.width && 
+                ball.y >= player.y && 
+                ball.y <= player.y + player.height) {
               ball.dx = Math.abs(ball.dx);
               score++;
             }
-            // Reset if missed
+            // KI-Paddle
+            if (ball.x >= ai.x - ball.size && 
+                ball.y >= ai.y && 
+                ball.y <= ai.y + ai.height) {
+              ball.dx = -Math.abs(ball.dx);
+            }
+            // Punkt für KI
             if (ball.x < 0) {
               ball.x = canvas.width/2;
               ball.y = canvas.height/2;
-              ball.dx = -Math.abs(ball.dx);
+              ball.dx = Math.abs(ball.dx);
               if (score > highscore) {
                 highscore = score;
                 localStorage.setItem('pongHighscore', highscore);
               }
               score = 0;
             }
-            // Draw
+            // Punkt für Spieler (Ball geht rechts raus)
+            if (ball.x > canvas.width) {
+              ball.x = canvas.width/2;
+              ball.y = canvas.height/2;
+              ball.dx = -Math.abs(ball.dx);
+              score++;
+            }
+            // Zeichnen
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#fff';
-            ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+            ctx.fillRect(ai.x, ai.y, ai.width, ai.height);
             ctx.fillRect(ball.x, ball.y, ball.size, ball.size);
             ctx.font = '20px monospace';
             ctx.fillText('Score: ' + score + ' | High: ' + highscore, 20, 30);
@@ -212,63 +229,71 @@
       win.document.close();
     }
 
-    // Übersetzungen
+    // Übersetzungen inkl. Footer
     const translations = {
       de: {
         title: "Hinterlass einen Gedanken. Für immer.",
         experiment: "Dies ist ein soziales Experiment:<br>Können 10.000 Menschen 5 $ zahlen –<br>für etwas, das ihnen nichts zurückgibt,<br>außer einem dauerhaften Platz in einem gemeinsamen menschlichen Gedanken?",
         counter: "<strong>Noch 9.999 Gedanken frei</strong>",
         payBtn: "Platz sichern — 5 $",
-        instructions: "Sende deinen Gedanken nach der Zahlung per E-Mail an <span class='email'>photo@eikonologia.com</span>, um ihn dauerhaft hinzuzufügen."
+        instructions: "Sende deinen Gedanken nach der Zahlung per E-Mail an <span class='email'>photo@eikonologia.com</span>, um ihn dauerhaft hinzuzufügen.",
+        footer: "Dieses Projekt kostet $0. Keine Werbung. Kein Tracking. Keine Investoren.<br>Mit Sorgfalt gebaut von eikonologia."
       },
       en: {
         title: "Leave one thought. Forever.",
         experiment: "This is a social experiment:<br>Can 10,000 people pay $5 for something that gives them nothing back —<br>except a permanent place in a shared human thought?",
         counter: "<strong>9,999 thoughts remaining</strong>",
         payBtn: "Secure your place — $5",
-        instructions: "After payment, email your thought to <span class='email'>photo@eikonologia.com</span> to have it added permanently."
+        instructions: "After payment, email your thought to <span class='email'>photo@eikonologia.com</span> to have it added permanently.",
+        footer: "This project costs $0 to run. No ads. No tracking. No investors.<br>Built with care by eikonologia."
       },
       es: {
         title: "Deja un pensamiento. Para siempre.",
         experiment: "Este es un experimento social:<br>¿Pueden 10.000 personas pagar 5 $ por algo que no les da nada a cambio,<br>excepto un lugar permanente en un pensamiento humano compartido?",
         counter: "<strong>Quedan 9.999 pensamientos</strong>",
         payBtn: "Asegura tu lugar — 5 $",
-        instructions: "Después del pago, envía tu pensamiento por correo a <span class='email'>photo@eikonologia.com</span> para que se añada permanentemente."
+        instructions: "Después del pago, envía tu pensamiento por correo a <span class='email'>photo@eikonologia.com</span> para que se añada permanentemente.",
+        footer: "Este proyecto cuesta $0. Sin anuncios. Sin seguimiento. Sin inversores.<br>Creado con cuidado por eikonologia."
       },
       fr: {
         title: "Laissez une pensée. Pour toujours.",
         experiment: "Ceci est une expérience sociale :<br>10 000 personnes peuvent-elles payer 5 $ pour quelque chose qui ne leur rapporte rien,<br>sauf une place permanente dans une pensée humaine partagée ?",
         counter: "<strong>9 999 pensées restantes</strong>",
         payBtn: "Réservez votre place — 5 $",
-        instructions: "Après le paiement, envoyez votre pensée par e-mail à <span class='email'>photo@eikonologia.com</span> pour qu’elle soit ajoutée de façon permanente."
+        instructions: "Après le paiement, envoyez votre pensée par e-mail à <span class='email'>photo@eikonologia.com</span> pour qu’elle soit ajoutée de façon permanente.",
+        footer: "Ce projet coûte $0. Pas de publicité. Pas de suivi. Pas d’investisseurs.<br>Créé avec soin par eikonologia."
       },
       el: {
         title: "Αφήστε μια σκέψη. Για πάντα.",
         experiment: "Αυτό είναι ένα κοινωνικό πείραμα:<br>Μπορούν 10.000 άνθρωποι να πληρώσουν 5 $ για κάτι που δεν τους δίνει τίποτα,<br>εκτός από μια μόνιμη θέση σε μια κοινή ανθρώπινη σκέψη;",
         counter: "<strong>Απομένουν 9.999 σκέψεις</strong>",
         payBtn: "Δεσμεύστε τη θέση σας — 5 $",
-        instructions: "Μετά την πληρωμή, στείλτε τη σκέψη σας με email στο <span class='email'>photo@eikonologia.com</span> για να προστεθεί μόνιμα."
+        instructions: "Μετά την πληρωμή, στείλτε τη σκέψη σας με email στο <span class='email'>photo@eikonologia.com</span> για να προστεθεί μόνιμα.",
+        footer: "Αυτό το έργο κοστίζει $0. Χωρίς διαφημίσεις. Χωρίς παρακολούθηση. Χωρίς επενδυτές.<br>Δημιουργήθηκε με φροντίδα από τον eikonologia."
       },
       tr: {
         title: "Bir düşünce bırak. Sonsuza dek.",
         experiment: "Bu bir sosyal deney:<br>10.000 kişi, karşılığında hiçbir şey almadan,<br>ortak bir insan düşüncesinde kalıcı bir yer için 5 $ ödeyebilir mi?",
         counter: "<strong>9.999 düşünce kaldı</strong>",
         payBtn: "Yerini güvence altına al — 5 $",
-        instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <span class='email'>photo@eikonologia.com</span> adresine e-posta gönder."
+        instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <span class='email'>photo@eikonologia.com</span> adresine e-posta gönder.",
+        footer: "Bu proje $0’a mal olur. Reklam yok. İzleme yok. Yatırımcı yok.<br>eikonologia tarafından özenle yapıldı."
       },
       ja: {
         title: "一つの思考を残そう。永遠に。",
         experiment: "これは社会実験です：<br>10,000人が、見返りなしで、<br>共有された人間の思考の中に永久的な場所を得るために5ドルを払えるでしょうか？",
         counter: "<strong>残り9,999の思考</strong>",
         payBtn: "あなたの場所を確保 — 5ドル",
-        instructions: "支払い後、あなたの思考を永久に追加するために、<span class='email'>photo@eikonologia.com</span> までメールしてください。"
+        instructions: "支払い後、あなたの思考を永久に追加するために、<span class='email'>photo@eikonologia.com</span> までメールしてください。",
+        footer: "このプロジェクトは$0で運営されています。広告なし。追跡なし。投資家なし。<br>eikonologiaが心を込めて作りました。"
       },
       zh: {
         title: "留下一个想法。永远。",
         experiment: "这是一个社会实验：<br>10,000人是否愿意支付5美元，<br>只为在人类共同的思想中获得一个永久的位置，而别无回报？",
         counter: "<strong>还剩 9,999 个想法</strong>",
         payBtn: "锁定你的位置 — 5 美元",
-        instructions: "付款后，请将你的想法通过电子邮件发送至 <span class='email'>photo@eikonologia.com</span>，我们将永久添加它。"
+        instructions: "付款后，请将你的想法通过电子邮件发送至 <span class='email'>photo@eikonologia.com</span>，我们将永久添加它。",
+        footer: "本项目运行成本为0美元。无广告。无追踪。无投资者。<br>由 eikonologia 精心打造。"
       }
     };
 
@@ -286,6 +311,7 @@
       document.getElementById('counter').innerHTML = t.counter;
       document.getElementById('pay-btn').textContent = t.payBtn;
       document.getElementById('instructions').innerHTML = t.instructions;
+      document.getElementById('footer').innerHTML = t.footer;
 
       const emailSpan = document.querySelector('.email');
       if (emailSpan) {
