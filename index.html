@@ -143,14 +143,22 @@
   </footer>
 
   <script>
-    // Pong mit Level-Up
-    function openPong() {
-      const pongHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head><title>Pong</title><meta name="viewport" content="width=device-width,initial-scale=1">
-        <style>body{margin:0;background:#000;overflow:hidden;}canvas{display:block;}</style></head>
-        <body><canvas id="pong"></canvas>
+  // Verbessertes Pong – funktioniert auf Handy + Desktop
+  function openPong() {
+    const pongHTML = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Pong</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+        <style>
+          * { margin:0; padding:0; }
+          body { background:#000; overflow:hidden; touch-action:none; }
+          canvas { display:block; }
+        </style>
+      </head>
+      <body>
+        <canvas id="pong"></canvas>
         <script>
           const canvas = document.getElementById('pong');
           const ctx = canvas.getContext('2d');
@@ -165,30 +173,75 @@
           const player = { x: 20, y: canvas.height/2 - paddleHeight/2, width: paddleWidth, height: paddleHeight, speed: 8 };
           const ai = { x: canvas.width - 30, y: canvas.height/2 - paddleHeight/2, width: paddleWidth, height: paddleHeight, speed: 6 };
           const ball = { x: canvas.width/2, y: canvas.height/2, size: ballSize, dx: 5, dy: 3 };
+
+          // Tastatur
           let keys = {};
-          document.addEventListener('keydown', e => keys[e.key] = true);
-          document.addEventListener('keyup', e => keys[e.key] = false);
+          window.addEventListener('keydown', e => keys[e.key] = true);
+          window.addEventListener('keyup', e => keys[e.key] = false);
+
+          // Touch / Maus für Handy
+          let touchY = null;
+          canvas.addEventListener('touchstart', e => {
+            e.preventDefault();
+            touchY = e.touches[0].clientY;
+          });
+          canvas.addEventListener('touchmove', e => {
+            e.preventDefault();
+            if (touchY !== null) {
+              const diff = e.touches[0].clientY - touchY;
+              player.y += diff;
+              touchY = e.touches[0].clientY;
+            }
+          });
+          canvas.addEventListener('touchend', () => touchY = null);
+
+          // Mausklick für Desktop (optional)
+          canvas.addEventListener('mousedown', e => {
+            const clickY = e.clientY;
+            if (clickY < canvas.height / 2) player.y -= 50;
+            else player.y += 50;
+          });
+
           function update() {
-            speedLevel = Math.floor(score / 5) + 1;
+            // Level alle 3 Punkte
+            speedLevel = Math.floor(score / 3) + 1;
             ball.dx = (ball.dx > 0 ? 1 : -1) * (5 + speedLevel * 0.8);
             ball.dy = (ball.dy > 0 ? 1 : -1) * (3 + speedLevel * 0.5);
+
+            // Tastatur-Steuerung (Desktop)
             if (keys['ArrowUp'] || keys['w']) player.y -= player.speed;
             if (keys['ArrowDown'] || keys['s']) player.y += player.speed;
+
+            // Grenzen
             player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
+
+            // KI
             const aiCenter = ai.y + ai.height/2;
             if (aiCenter < ball.y - 10) ai.y += ai.speed + speedLevel * 0.3;
             if (aiCenter > ball.y + 10) ai.y -= ai.speed + speedLevel * 0.3;
             ai.y = Math.max(0, Math.min(canvas.height - ai.height, ai.y));
+
+            // Ball
             ball.x += ball.dx;
             ball.y += ball.dy;
             if (ball.y <= 0 || ball.y >= canvas.height - ball.size) ball.dy *= -1;
-            if (ball.x <= player.x + player.width && ball.y >= player.y && ball.y <= player.y + player.height) {
+
+            // Kollision Spieler
+            if (ball.x <= player.x + player.width && 
+                ball.y >= player.y && 
+                ball.y <= player.y + player.height) {
               ball.dx = Math.abs(ball.dx);
               score++;
             }
-            if (ball.x >= ai.x - ball.size && ball.y >= ai.y && ball.y <= ai.y + ai.height) {
+
+            // Kollision KI
+            if (ball.x >= ai.x - ball.size && 
+                ball.y >= ai.y && 
+                ball.y <= ai.y + ai.height) {
               ball.dx = -Math.abs(ball.dx);
             }
+
+            // Punkt verloren
             if (ball.x < 0) {
               ball.x = canvas.width/2;
               ball.y = canvas.height/2;
@@ -199,6 +252,8 @@
               score = 0;
               speedLevel = 1;
             }
+
+            // Zeichnen
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#fff';
@@ -207,14 +262,25 @@
             ctx.fillRect(ball.x, ball.y, ball.size, ball.size);
             ctx.font = '20px monospace';
             ctx.fillText('Score: ' + score + ' | High: ' + highscore + ' | Lvl: ' + speedLevel, 20, 30);
+
             requestAnimationFrame(update);
           }
+
           window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
           });
+
           update();
         <\/script>
+      </body>
+      </html>
+    `;
+    const win = window.open();
+    win.document.write(pongHTML);
+    win.document.close();
+  }
+</script>
         </body>
         </html>
       `;
