@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="A social experiment: Can 10,000 people pay $5 for something with no personal value — except being part of a shared human thought?">
+  <link rel="canonical" href="https://eikonologia.github.io/lastthought/">
   <title>Leave one thought. Forever.</title>
   <style>
     body {
@@ -11,17 +13,17 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       text-align: center;
       margin: 0;
-      padding: 40px 20px;
-      line-height: 1.6;
+      padding: 30px 20px;
+      line-height: 1.5;
     }
     h1 {
-      font-size: 2.8rem;
-      margin: 0 0 20px;
+      font-size: 2.4rem;
+      margin: 0 0 15px;
       font-weight: 300;
     }
     .counter {
-      font-size: 1.3rem;
-      margin: 25px 0;
+      font-size: 1.2rem;
+      margin: 15px 0;
       font-weight: 300;
     }
     .btn {
@@ -29,125 +31,250 @@
       background: #fff;
       color: #000;
       text-decoration: none;
-      padding: 12px 30px;
+      padding: 10px 24px;
       border-radius: 30px;
       font-weight: 600;
-      margin: 20px 0;
+      margin: 15px 0;
       transition: transform 0.2s;
     }
     .btn:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
     .instructions {
       max-width: 550px;
-      margin: 30px auto;
-      font-size: 1.1rem;
-      line-height: 1.7;
+      margin: 25px auto;
+      font-size: 1.05rem;
+      line-height: 1.6;
     }
     .email {
       color: #fff;
       text-decoration: underline;
       font-weight: bold;
     }
-    .purpose {
-      max-width: 500px;
+    .experiment {
+      max-width: 600px;
+      margin: 25px auto;
+      font-size: 1.1rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+    .thoughts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      max-width: 1000px;
       margin: 30px auto;
-      opacity: 0.85;
-      font-size: 1rem;
+      padding: 0 10px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    .thought-item {
+      text-align: left;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 4px;
     }
     .lang-switch {
-      margin-top: 40px;
+      margin: 25px 0;
       font-size: 0.9rem;
       opacity: 0.7;
     }
     .lang-switch a {
       color: #aaa;
       text-decoration: none;
-      margin: 0 6px;
+      margin: 0 5px;
     }
     .lang-switch a.active {
       color: #fff;
       text-decoration: underline;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 0.85rem;
+      opacity: 0.6;
     }
   </style>
 </head>
 <body>
   <h1 id="title">Leave one thought. Forever.</h1>
   
-  <p id="subtitle">Only 10,000 thoughts will ever fit here.</p>
+  <div class="experiment" id="experiment">
+    This is a social experiment:<br>
+    Can 10,000 people pay $5 for something that gives them nothing back —<br>
+    except a permanent place in a shared human thought?
+  </div>
 
   <div class="counter" id="counter"><strong>9,999 thoughts remaining</strong></div>
 
-  <p id="question">What would you leave behind?</p>
-
-  <a href="https://buy.stripe.com/14A00i5XqcK52D91l0bQY00" class="btn" id="pay-btn">Secure your place — $5</a>
-
-  <p class="purpose" id="purpose">All proceeds help people feel less alone in their thoughts.</p>
+  <a href="https://buy.stripe.com/14A00i5XqcK52D91l0bQY00" target="_blank" class="btn" id="pay-btn">Secure your place — $5</a>
 
   <div class="instructions" id="instructions">
     After payment, email your thought to <span class="email">photo@eikonologia.com</span> to have it added permanently.
   </div>
 
-  <div class="lang-switch" id="lang-switch">
-    <a href="#" data-lang="de">DE</a>
-    <a href="#" data-lang="en">EN</a>
-    <a href="#" data-lang="es">ES</a>
-    <a href="#" data-lang="fr">FR</a>
-    <a href="#" data-lang="el">EL</a>
+  <div class="thoughts-grid" id="thoughts-grid">
+    <div class="thought-item">#0001 "I existed."</div>
+    <div class="thought-item">#0002 "You are not alone."</div>
+    <div class="thought-item">#0003 "Breathe."</div>
+    <div class="thought-item">#0004 "This matters."</div>
+    <div class="thought-item">#0005 "Keep going."</div>
+    <div class="thought-item">#0006 "Hope is quiet."</div>
   </div>
 
+  <a href="javascript:void(0)" onclick="openPong()" class="btn" style="background:#333;">Play Pong</a>
+
+  <div class="lang-switch" id="lang-switch">
+    <a href="#" data-lang="de">🇩🇪 DE</a>
+    <a href="#" data-lang="en">🇬🇧 EN</a>
+    <a href="#" data-lang="es">🇪🇸 ES</a>
+    <a href="#" data-lang="fr">🇫🇷 FR</a>
+    <a href="#" data-lang="el">🇬🇷 EL</a>
+    <a href="#" data-lang="tr">🇹🇷 TR</a>
+    <a href="#" data-lang="ja">🇯🇵 JA</a>
+    <a href="#" data-lang="zh">🇨🇳 ZH</a>
+  </div>
+
+  <footer>
+    This project costs $0 to run. No ads. No tracking. No investors.<br>
+    Built with care by eikonologia.
+  </footer>
+
   <script>
+    // Pong-Spiel in neuem Tab
+    function openPong() {
+      const pongHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head><title>Pong</title><meta name="viewport" content="width=device-width,initial-scale=1">
+        <style>body{margin:0;background:#000;overflow:hidden;}canvas{display:block;}</style></head>
+        <body><canvas id="pong"></canvas>
+        <script>
+          const canvas = document.getElementById('pong');
+          const ctx = canvas.getContext('2d');
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          let score = 0;
+          let highscore = localStorage.getItem('pongHighscore') || 0;
+          const paddle = { x: 20, y: canvas.height/2 - 40, width: 10, height: 80, speed: 8 };
+          const ball = { x: canvas.width/2, y: canvas.height/2, size: 10, dx: 5, dy: 3 };
+          let keys = {};
+          document.addEventListener('keydown', e => keys[e.key] = true);
+          document.addEventListener('keyup', e => keys[e.key] = false);
+          function update() {
+            // Paddle control
+            if (keys['ArrowUp'] || keys['w']) paddle.y -= paddle.speed;
+            if (keys['ArrowDown'] || keys['s']) paddle.y += paddle.speed;
+            paddle.y = Math.max(0, Math.min(canvas.height - paddle.height, paddle.y));
+            // Ball movement
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+            // Wall bounce
+            if (ball.y <= 0 || ball.y >= canvas.height - ball.size) ball.dy *= -1;
+            // Paddle bounce
+            if (ball.x <= paddle.x + paddle.width && 
+                ball.y >= paddle.y && 
+                ball.y <= paddle.y + paddle.height) {
+              ball.dx = Math.abs(ball.dx);
+              score++;
+            }
+            // Reset if missed
+            if (ball.x < 0) {
+              ball.x = canvas.width/2;
+              ball.y = canvas.height/2;
+              ball.dx = -Math.abs(ball.dx);
+              if (score > highscore) {
+                highscore = score;
+                localStorage.setItem('pongHighscore', highscore);
+              }
+              score = 0;
+            }
+            // Draw
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+            ctx.fillRect(ball.x, ball.y, ball.size, ball.size);
+            ctx.font = '20px monospace';
+            ctx.fillText('Score: ' + score + ' | High: ' + highscore, 20, 30);
+            requestAnimationFrame(update);
+          }
+          window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+          });
+          update();
+        <\/script>
+        </body>
+        </html>
+      `;
+      const win = window.open();
+      win.document.write(pongHTML);
+      win.document.close();
+    }
+
+    // Übersetzungen
     const translations = {
       de: {
         title: "Hinterlass einen Gedanken. Für immer.",
-        subtitle: "Nur 10.000 Gedanken finden hier jemals Platz.",
+        experiment: "Dies ist ein soziales Experiment:<br>Können 10.000 Menschen 5 $ zahlen –<br>für etwas, das ihnen nichts zurückgibt,<br>außer einem dauerhaften Platz in einem gemeinsamen menschlichen Gedanken?",
         counter: "<strong>Noch 9.999 Gedanken frei</strong>",
-        question: "Was würdest du hinterlassen?",
         payBtn: "Platz sichern — 5 $",
-        purpose: "Alle Einnahmen helfen Menschen, sich in ihren Gedanken weniger allein zu fühlen.",
         instructions: "Sende deinen Gedanken nach der Zahlung per E-Mail an <span class='email'>photo@eikonologia.com</span>, um ihn dauerhaft hinzuzufügen."
       },
       en: {
         title: "Leave one thought. Forever.",
-        subtitle: "Only 10,000 thoughts will ever fit here.",
+        experiment: "This is a social experiment:<br>Can 10,000 people pay $5 for something that gives them nothing back —<br>except a permanent place in a shared human thought?",
         counter: "<strong>9,999 thoughts remaining</strong>",
-        question: "What would you leave behind?",
         payBtn: "Secure your place — $5",
-        purpose: "All proceeds help people feel less alone in their thoughts.",
         instructions: "After payment, email your thought to <span class='email'>photo@eikonologia.com</span> to have it added permanently."
       },
       es: {
         title: "Deja un pensamiento. Para siempre.",
-        subtitle: "Solo 10.000 pensamientos cabrán aquí.",
+        experiment: "Este es un experimento social:<br>¿Pueden 10.000 personas pagar 5 $ por algo que no les da nada a cambio,<br>excepto un lugar permanente en un pensamiento humano compartido?",
         counter: "<strong>Quedan 9.999 pensamientos</strong>",
-        question: "¿Qué dejarías atrás?",
         payBtn: "Asegura tu lugar — 5 $",
-        purpose: "Todos los ingresos ayudan a las personas a sentirse menos solas en sus pensamientos.",
         instructions: "Después del pago, envía tu pensamiento por correo a <span class='email'>photo@eikonologia.com</span> para que se añada permanentemente."
       },
       fr: {
         title: "Laissez une pensée. Pour toujours.",
-        subtitle: "Seulement 10 000 pensées trouveront place ici.",
+        experiment: "Ceci est une expérience sociale :<br>10 000 personnes peuvent-elles payer 5 $ pour quelque chose qui ne leur rapporte rien,<br>sauf une place permanente dans une pensée humaine partagée ?",
         counter: "<strong>9 999 pensées restantes</strong>",
-        question: "Qu’est-ce que vous laisseriez derrière vous ?",
         payBtn: "Réservez votre place — 5 $",
-        purpose: "Tous les revenus aident les gens à se sentir moins seuls dans leurs pensées.",
         instructions: "Après le paiement, envoyez votre pensée par e-mail à <span class='email'>photo@eikonologia.com</span> pour qu’elle soit ajoutée de façon permanente."
       },
       el: {
         title: "Αφήστε μια σκέψη. Για πάντα.",
-        subtitle: "Μόνο 10.000 σκέψεις θα χωρέσουν εδώ.",
+        experiment: "Αυτό είναι ένα κοινωνικό πείραμα:<br>Μπορούν 10.000 άνθρωποι να πληρώσουν 5 $ για κάτι που δεν τους δίνει τίποτα,<br>εκτός από μια μόνιμη θέση σε μια κοινή ανθρώπινη σκέψη;",
         counter: "<strong>Απομένουν 9.999 σκέψεις</strong>",
-        question: "Τι θα αφήνατε πίσω;",
         payBtn: "Δεσμεύστε τη θέση σας — 5 $",
-        purpose: "Όλα τα έσοδα βοηθούν τους ανθρώπους να νιώθουν λιγότερο μόνοι στις σκέψεις τους.",
         instructions: "Μετά την πληρωμή, στείλτε τη σκέψη σας με email στο <span class='email'>photo@eikonologia.com</span> για να προστεθεί μόνιμα."
+      },
+      tr: {
+        title: "Bir düşünce bırak. Sonsuza dek.",
+        experiment: "Bu bir sosyal deney:<br>10.000 kişi, karşılığında hiçbir şey almadan,<br>ortak bir insan düşüncesinde kalıcı bir yer için 5 $ ödeyebilir mi?",
+        counter: "<strong>9.999 düşünce kaldı</strong>",
+        payBtn: "Yerini güvence altına al — 5 $",
+        instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <span class='email'>photo@eikonologia.com</span> adresine e-posta gönder."
+      },
+      ja: {
+        title: "一つの思考を残そう。永遠に。",
+        experiment: "これは社会実験です：<br>10,000人が、見返りなしで、<br>共有された人間の思考の中に永久的な場所を得るために5ドルを払えるでしょうか？",
+        counter: "<strong>残り9,999の思考</strong>",
+        payBtn: "あなたの場所を確保 — 5ドル",
+        instructions: "支払い後、あなたの思考を永久に追加するために、<span class='email'>photo@eikonologia.com</span> までメールしてください。"
+      },
+      zh: {
+        title: "留下一个想法。永远。",
+        experiment: "这是一个社会实验：<br>10,000人是否愿意支付5美元，<br>只为在人类共同的思想中获得一个永久的位置，而别无回报？",
+        counter: "<strong>还剩 9,999 个想法</strong>",
+        payBtn: "锁定你的位置 — 5 美元",
+        instructions: "付款后，请将你的想法通过电子邮件发送至 <span class='email'>photo@eikonologia.com</span>，我们将永久添加它。"
       }
     };
 
     function getBrowserLang() {
       const lang = (navigator.language || navigator.userLanguage).split('-')[0];
-      return ['de','en','es','fr','el'].includes(lang) ? lang : 'en';
+      return ['de','en','es','fr','el','tr','ja','zh'].includes(lang) ? lang : 'en';
     }
 
     let currentLang = localStorage.getItem('lang') || getBrowserLang();
@@ -155,16 +282,14 @@
     function updateContent() {
       const t = translations[currentLang];
       document.getElementById('title').textContent = t.title;
-      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('experiment').innerHTML = t.experiment;
       document.getElementById('counter').innerHTML = t.counter;
-      document.getElementById('question').textContent = t.question;
       document.getElementById('pay-btn').textContent = t.payBtn;
-      document.getElementById('purpose').textContent = t.purpose;
       document.getElementById('instructions').innerHTML = t.instructions;
 
       const emailSpan = document.querySelector('.email');
       if (emailSpan) {
-        emailSpan.textContent = "yphoto@eikonologia.com";
+        emailSpan.textContent = "photo@eikonologia.com";
         emailSpan.style.color = "#fff";
         emailSpan.style.textDecoration = "underline";
         emailSpan.style.fontWeight = "bold";
