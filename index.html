@@ -14,27 +14,8 @@
       padding: 40px 20px;
       line-height: 1.6;
     }
-    h1 {
-      font-size: 2.8rem;
-      margin: 0 0 20px;
-      font-weight: 300;
-    }
-    .thoughts {
-      margin: 40px auto;
-      max-width: 600px;
-      border-top: 1px solid #333;
-      padding-top: 30px;
-    }
-    .thought {
-      font-size: 1.3rem;
-      margin: 20px 0;
-      opacity: 0.9;
-    }
-    .counter {
-      font-size: 1.2rem;
-      margin: 20px 0;
-      font-weight: 300;
-    }
+    h1 { font-size: 2.8rem; margin: 0 0 20px; font-weight: 300; }
+    .counter { font-size: 1.2rem; margin: 20px 0; font-weight: 300; }
     .btn {
       display: inline-block;
       background: #fff;
@@ -46,37 +27,148 @@
       margin: 20px 0;
       transition: transform 0.2s;
     }
-    .btn:hover {
-      transform: scale(1.05);
+    .btn:hover { transform: scale(1.05); }
+    .lang-switch {
+      margin: 20px 0;
+      font-size: 0.9rem;
+      opacity: 0.7;
     }
-    .purpose {
+    .lang-switch a {
+      color: #aaa;
+      text-decoration: none;
+      margin: 0 6px;
+    }
+    .lang-switch a.active {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .instructions {
       max-width: 500px;
       margin: 30px auto;
-      font-size: 0.95rem;
-      opacity: 0.8;
+      font-size: 1.05rem;
+      line-height: 1.7;
     }
+    .email { color: #fff; text-decoration: underline; font-weight: bold; }
   </style>
 </head>
 <body>
-  <h1>Leave one thought. Forever.</h1>
+  <h1 id="title">Leave one thought. Forever.</h1>
   
-  <p>Only 10,000 human thoughts will ever be preserved here.<br>
-  After that, the page closes — forever.</p>
+  <p id="subtitle">Only 10,000 human thoughts will ever be preserved here.<br>After that, the page closes — forever.</p>
 
-  <div class="counter"><strong>9,999 spots left</strong></div>
+  <div class="counter" id="counter"><strong>9,999 spots left</strong></div>
 
-  <p>Write the one sentence you’d want to leave behind.<br>
-  After payment, it will be added here — <strong>public, permanent, uneditable</strong>.</p>
-
-  <a href="https://buy.stripe.com/14A00i5XqcK52D91l0bQY00" class="btn">Secure your place — $5</a>
-
-  <div class="thoughts">
-    <div class="thought">"I existed. And for a moment, I was heard." — Alex, 2024</div>
+  <div class="instructions" id="instructions">
+    1. Pay $5 to secure your spot.<br>
+    2. Email your thought to <span class="email">yourname@example.com</span>.<br>
+    I’ll add it here — permanently and for everyone to see.
   </div>
 
-  <p class="purpose">
-    All proceeds fund free mental health support for young people feeling isolated online.<br>
-    Every thought stays. Every dollar helps.
+  <a href="https://buy.stripe.com/14A00i5XqcK52D91l0bQY00" class="btn" id="pay-btn">Secure your place — $5</a>
+
+  <p id="purpose" style="margin-top: 40px; opacity: 0.8;">
+    All proceeds support this space — so it can remain a place where people feel less alone in their thoughts.
   </p>
+
+  <div class="lang-switch" id="lang-switch">
+    <a href="#" data-lang="de">DE</a>
+    <a href="#" data-lang="en">EN</a>
+    <a href="#" data-lang="es">ES</a>
+    <a href="#" data-lang="fr">FR</a>
+    <a href="#" data-lang="el">EL</a>
+  </div>
+
+  <script>
+    // Übersetzungen
+    const translations = {
+      de: {
+        title: "Hinterlass einen Gedanken. Für immer.",
+        subtitle: "Nur 10.000 Gedanken finden hier jemals Platz.<br>Nachher schließt die Seite — für immer.",
+        counter: "<strong>Noch 9.999 Plätze frei</strong>",
+        instructions: "1. Zahle 5 $, um deinen Platz zu sichern.<br>2. Sende deinen Gedanken per E-Mail an <span class='email'>yourname@example.com</span>.<br>Ich füge ihn hier hinzu — dauerhaft und für alle sichtbar.",
+        payBtn: "Platz sichern — 5 $",
+        purpose: "Alle Einnahmen erhalten diesen Ort — damit er ein Platz bleiben kann, an dem Menschen sich in ihren Gedanken weniger allein fühlen."
+      },
+      en: {
+        title: "Leave one thought. Forever.",
+        subtitle: "Only 10,000 human thoughts will ever be preserved here.<br>After that, the page closes — forever.",
+        counter: "<strong>9,999 spots left</strong>",
+        instructions: "1. Pay $5 to secure your spot.<br>2. Email your thought to <span class='email'>yourname@example.com</span>.<br>I’ll add it here — permanently and for everyone to see.",
+        payBtn: "Secure your place — $5",
+        purpose: "All proceeds support this space — so it can remain a place where people feel less alone in their thoughts."
+      },
+      es: {
+        title: "Deja un pensamiento. Para siempre.",
+        subtitle: "Solo 10.000 pensamientos humanos se conservarán aquí.<br>Después, la página se cerrará — para siempre.",
+        counter: "<strong>Quedan 9.999 plazas</strong>",
+        instructions: "1. Paga 5 $ para asegurar tu lugar.<br>2. Envía tu pensamiento por correo a <span class='email'>yourname@example.com</span>.<br>Lo añadiré aquí — permanentemente y visible para todos.",
+        payBtn: "Asegura tu lugar — 5 $",
+        purpose: "Todos los ingresos apoyan este espacio — para que siga siendo un lugar donde las personas se sientan menos solas en sus pensamientos."
+      },
+      fr: {
+        title: "Laissez une pensée. Pour toujours.",
+        subtitle: "Seulement 10 000 pensées humaines seront conservées ici.<br>Ensuite, la page se fermera — pour toujours.",
+        counter: "<strong>9 999 places restantes</strong>",
+        instructions: "1. Payez 5 $ pour réserver votre place.<br>2. Envoyez votre pensée par e-mail à <span class='email'>yourname@example.com</span>.<br>Je l’ajouterai ici — de façon permanente et visible par tous.",
+        payBtn: "Réservez votre place — 5 $",
+        purpose: "Tous les revenus soutiennent cet espace — afin qu’il reste un lieu où les gens se sentent moins seuls dans leurs pensées."
+      },
+      el: {
+        title: "Αφήστε μια σκέψη. Για πάντα.",
+        subtitle: "Μόνο 10.000 ανθρώπινες σκέψεις θα διατηρηθούν εδώ.<br>Μετά, η σελίδα θα κλείσει — για πάντα.",
+        counter: "<strong>Απομένουν 9.999 θέσεις</strong>",
+        instructions: "1. Πληρώστε 5 $ για να δεσμεύσετε τη θέση σας.<br>2. Στείλτε τη σκέψη σας με email στο <span class='email'>yourname@example.com</span>.<br>Θα την προσθέσω εδώ — μόνιμα και ορατή σε όλους.",
+        payBtn: "Δεσμεύστε τη θέση σας — 5 $",
+        purpose: "Όλα τα έσοδα υποστηρίζουν αυτόν τον χώρο — ώστε να παραμείνει ένα μέρος όπου οι άνθρωποι νιώθουν λιγότερο μόνοι στις σκέψεις τους."
+      }
+    };
+
+    // Sprache erkennen (Browser oder localStorage)
+    function getBrowserLang() {
+      const lang = (navigator.language || navigator.userLanguage).split('-')[0];
+      return ['de','en','es','fr','el'].includes(lang) ? lang : 'en';
+    }
+
+    // Aktuelle Sprache
+    let currentLang = localStorage.getItem('lang') || getBrowserLang();
+
+    // Texte aktualisieren
+    function updateContent() {
+      const t = translations[currentLang];
+      document.getElementById('title').innerHTML = t.title;
+      document.getElementById('subtitle').innerHTML = t.subtitle;
+      document.getElementById('counter').innerHTML = t.counter;
+      document.getElementById('instructions').innerHTML = t.instructions;
+      document.getElementById('pay-btn').textContent = t.payBtn;
+      document.getElementById('purpose').innerHTML = t.purpose;
+
+      // E-Mail-Link aktualisieren (wichtig nach innerHTML!)
+      const emailSpan = document.querySelector('.email');
+      if (emailSpan) {
+        emailSpan.textContent = "yourname@example.com"; // ← ÄNDERE DAS!
+        emailSpan.style.textDecoration = "underline";
+        emailSpan.style.fontWeight = "bold";
+        emailSpan.style.color = "#fff";
+      }
+
+      // Aktiven Sprach-Button markieren
+      document.querySelectorAll('#lang-switch a').forEach(a => {
+        a.classList.toggle('active', a.dataset.lang === currentLang);
+      });
+    }
+
+    // Sprachwechsel-Handler
+    document.querySelectorAll('#lang-switch a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentLang = a.dataset.lang;
+        localStorage.setItem('lang', currentLang);
+        updateContent();
+      });
+    });
+
+    // Beim Laden ausführen
+    updateContent();
+  </script>
 </body>
 </html>
