@@ -248,4 +248,65 @@
 
   <script>
     function openPong() {
-      const pongHTML = `<!DOCTYPE html><html><head><title>Pong</title><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><
+      const pongHTML = `<!DOCTYPE html><html><head><title>Pong</title><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><style>*{margin:0;padding:0;}body{background:#000;overflow:hidden;touch-action:none;}canvas{display:block;}</style></head><body><canvas id="pong"></canvas><script>const canvas=document.getElementById('pong');const ctx=canvas.getContext('2d');const isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);const playHeight=isMobile?window.innerHeight*0.6:window.innerHeight;const offsetY=isMobile?(window.innerHeight-playHeight)/2:0;canvas.width=window.innerWidth;canvas.height=window.innerHeight;let score=0;let highscore=localStorage.getItem('pongHighscore')||0;let speedLevel=1;const paddleHeight=isMobile?120:100;const paddleWidth=12;const ballSize=12;const player={x:20,y:playHeight/2-paddleHeight/2+offsetY,width:paddleWidth,height:paddleHeight,speed:isMobile?12:8};const ai={x:canvas.width-32,y:playHeight/2-paddleHeight/2+offsetY,width:paddleWidth,height:paddleHeight,speed:isMobile?7:6};const baseDx=isMobile?3.5:5;const baseDy=isMobile?2.5:3;const ball={x:canvas.width/2,y:canvas.height/2,size:ballSize,dx:baseDx,dy:baseDy};let keys={};window.addEventListener('keydown',e=>keys[e.key]=true);window.addEventListener('keyup',e=>keys[e.key]=false);let touchY=null;canvas.addEventListener('touchstart',e=>{e.preventDefault();touchY=e.touches[0].clientY;});canvas.addEventListener('touchmove',e=>{e.preventDefault();if(touchY!==null){const diff=e.touches[0].clientY-touchY;player.y+=diff;touchY=e.touches[0].clientY;}});canvas.addEventListener('touchend',()=>touchY=null);canvas.addEventListener('mousedown',e=>{const clickY=e.clientY;if(clickY<canvas.height/2)player.y-=60;else player.y+=60;});function update(){speedLevel=Math.floor(score/3)+1;ball.dx=(ball.dx>0?1:-1)*(baseDx+speedLevel*0.5);ball.dy=(ball.dy>0?1:-1)*(baseDy+speedLevel*0.3);if(keys['ArrowUp']||keys['w'])player.y-=player.speed;if(keys['ArrowDown']||keys['s'])player.y+=player.speed;player.y=Math.max(offsetY,Math.min(offsetY+playHeight-player.height,player.y));const aiCenter=ai.y+ai.height/2;if(aiCenter<ball.y-15)ai.y+=ai.speed+speedLevel*0.2;if(aiCenter>ball.y+15)ai.y-=ai.speed+speedLevel*0.2;ai.y=Math.max(offsetY,Math.min(offsetY+playHeight-ai.height,ai.y));ball.x+=ball.dx;ball.y+=ball.dy;if(ball.y<=offsetY||ball.y>=offsetY+playHeight-ball.size)ball.dy*=-1;if(ball.x<=player.x+player.width&&ball.y>=player.y&&ball.y<=player.y+player.height){ball.dx=Math.abs(ball.dx);score++;}if(ball.x>=ai.x-ball.size&&ball.y>=ai.y&&ball.y<=ai.y+ai.height){ball.dx=-Math.abs(ball.dx);}if(ball.x<0){ball.x=canvas.width/2;ball.y=canvas.height/2;if(score>highscore){highscore=score;localStorage.setItem('pongHighscore',highscore);}score=0;speedLevel=1;}ctx.fillStyle='#000';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.strokeStyle='#333';ctx.strokeRect(0,offsetY,canvas.width,playHeight);ctx.fillStyle='#fff';ctx.fillRect(player.x,player.y,player.width,player.height);ctx.fillRect(ai.x,ai.y,ai.width,ai.height);ctx.fillRect(ball.x,ball.y,ball.size,ball.size);ctx.font='20px monospace';ctx.fillStyle='#fff';ctx.fillText('Score: '+score+' | High: '+highscore+' | Lvl: '+speedLevel,20,30);requestAnimationFrame(update);}window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});update();<\/script></body></html>`;
+      const win = window.open();
+      win.document.write(pongHTML);
+      win.document.close();
+    }
+
+    const translations = {
+      en: { title: "Your Thought", experiment: "This is a social media experiment:<br>Can 10,000 people pay 7 € — the number of luck and wholeness —<br>for something that gives them nothing back,<br>except a permanent place in a shared human thought?", counter: "<strong>9,997 thoughts remaining</strong>", payBtn: "Secure your place — 7 €", instructions: "After payment, email your thought to <a href='mailto:photo@eikonologia.com?subject=My Thought for Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> to have it added permanently.", latestThoughts: ['#0003 "This matters." — Alex','#0002 "You are not alone."','#0001 "I existed."'], shareText: "To make this experiment a success, I need YOUR thought.<br>Share it with someone who might add theirs." },
+      de: { title: "Dein Gedanke", experiment: "Dies ist ein Social-Media-Experiment:<br>Können 10.000 Menschen 7 € zahlen –<br>die Zahl des Glücks und der Ganzheit –<br>für etwas, das ihnen nichts zurückgibt,<br>außer einem dauerhaften Platz in einem gemeinsamen menschlichen Gedanken?", counter: "<strong>Noch 9.997 Gedanken frei</strong>", payBtn: "Platz sichern — 7 €", instructions: "Sende deinen Gedanken nach der Zahlung per E-Mail an <a href='mailto:photo@eikonologia.com?subject=Mein Gedanke für Your Thought' class='email' target='_blank'>photo@eikonologia.com</a>, um ihn dauerhaft hinzuzufügen.", latestThoughts: ['#0003 "Das zählt." — Alex','#0002 "Du bist nicht allein."','#0001 "Ich war hier."'], shareText: "Um dieses Experiment erfolgreich zu machen, brauche ich DEINEN Gedanken.<br>Teile es mit jemandem, der seinen beitragen könnte." },
+      es: { title: "Tu Pensamiento", experiment: "Este es un experimento en redes sociales:<br>¿Pueden 10.000 personas pagar 7 € — el número de la suerte y la plenitud —<br>por algo que no les da nada a cambio,<br>excepto un lugar permanente en un pensamiento humano compartido?", counter: "<strong>Quedan 9.997 pensamientos</strong>", payBtn: "Asegura tu lugar — 7 €", instructions: "Después del pago, envía tu pensamiento por correo a <a href='mailto:photo@eikonologia.com?subject=Mi pensamiento para Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> para que se añada permanentemente.", latestThoughts: ['#0003 "Esto importa." — Alex','#0002 "No estás solo."','#0001 "Existí."'], shareText: "Para que este experimento tenga éxito, necesito TU pensamiento.<br>Compártelo con alguien que podría añadir el suyo." },
+      fr: { title: "Ta Pensée", experiment: "Ceci est une expérience sur les réseaux sociaux :<br>10 000 personnes peuvent-elles payer 7 € — le chiffre de la chance et de l’accomplissement —<br>pour quelque chose qui ne leur rapporte rien,<br>sauf une place permanente dans une pensée humaine partagée ?", counter: "<strong>9 997 pensées restantes</strong>", payBtn: "Réserve ta place — 7 €", instructions: "Après le paiement, envoie ta pensée par e-mail à <a href='mailto:photo@eikonologia.com?subject=Ma pensée pour Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> pour qu’elle soit ajoutée de façon permanente.", latestThoughts: ['#0003 "Cela compte." — Alex','#0002 "Tu n’es pas seul."','#0001 "J’ai existé."'], shareText: "Pour que cette expérience réussisse, j’ai besoin de TA pensée.<br>Partage-la avec quelqu’un qui pourrait ajouter la sienne." },
+      el: { title: "Η Σκέψη Σου", experiment: "Αυτό είναι ένα πείραμα στα social media:<br>Μπορούν 10.000 άνθρωποι να πληρώσουν 7 € — ο αριθμός της τύχης και της πληρότητας —<br>για κάτι που δεν τους δίνει τίποτα,<br>εκτός από μια μόνιμη θέση σε μια κοινή ανθρώπινη σκέψη;", counter: "<strong>Απομένουν 9.997 σκέψεις</strong>", payBtn: "Δέσμευσε τη θέση σου — 7 €", instructions: "Μετά την πληρωμή, στείλε τη σκέψη σου με email στο <a href='mailto:photo@eikonologia.com?subject=Η σκέψη μου για το Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> για να προστεθεί μόνιμα.", latestThoughts: ['#0003 "Αυτό έχει σημασία." — Αλέξ','#0002 "Δεν είσαι μόνος."','#0001 "Υπήρξα."'], shareText: "Για να επιτύχει αυτό το πείραμα, χρειάζομαι τη ΔΙΚΗ ΣΟΥ σκέψη.<br>Μοιράσου το με κάποιον που ίσως προσθέσει τη δική του." },
+      tr: { title: "Düşüncen", experiment: "Bu bir sosyal medya deneyidir:<br>10.000 kişi, karşılığında hiçbir şey almadan,<br>ortak bir insan düşüncesinde kalıcı bir yer için<br>7 € — şans ve bütünlüğün sayısı — ödeyebilir mi?", counter: "<strong>9.997 düşünce kaldı</strong>", payBtn: "Yerini güvence altına al — 7 €", instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <a href='mailto:photo@eikonologia.com?subject=Düşüncem Your Thought için' class='email' target='_blank'>photo@eikonologia.com</a> adresine e-posta gönder.", latestThoughts: ['#0003 "Bu önemli." — Alex','#0002 "Yalnız değilsin."','#0001 "Var oldum."'], shareText: "Bu deneyin başarılı olması için DÜŞÜNCENE İHTİYACIM VAR.<br>Bunu düşüncesini ekleyebilecek biriyle paylaş." },
+      ja: { title: "あなたの思考", experiment: "これはソーシャルメディア実験です：<br>10,000人が、見返りなしで、<br>共有された人間の思考の中に永久的な場所を得るために<br>7€（幸運と完全性の数字）を払えるでしょうか？", counter: "<strong>残り9,997の思考</strong>", payBtn: "あなたの場所を確保 — 7€", instructions: "支払い後、あなたの思考を永久に追加するために、<a href='mailto:photo@eikonologia.com?subject=Your Thoughtへの私の思考' class='email' target='_blank'>photo@eikonologia.com</a> までメールしてください。", latestThoughts: ['#0003 "これは大切だ。" — アレックス','#0002 "あなたはひとりじゃない。"','#0001 "私はいた。"'], shareText: "この実験を成功させるには、あなたの思考が必要です。<br>誰かにシェアして、彼らの思考も加えてもらいましょう。" },
+      zh: { title: "你的想法", experiment: "这是一个社交媒体实验：<br>10,000人是否愿意支付7欧元——<br>幸运与圆满的数字——<br>只为在人类共同的思想中获得一个永久的位置，而别无回报？", counter: "<strong>还剩 9,997 个想法</strong>", payBtn: "锁定你的位置 — 7 欧元", instructions: "付款后，请将你的想法通过电子邮件发送至 <a href='mailto:photo@eikonologia.com?subject=我的想法 for Your Thought' class='email' target='_blank'>photo@eikonologia.com</a>，我们将永久添加它。", latestThoughts: ['#0003 "这很重要。" — 亚历克斯','#0002 "你并不孤单。"','#0001 "我存在过。"'], shareText: "要让这个实验成功，我需要你的想法。<br>分享给可能也想留下想法的人。" }
+    };
+
+    function getBrowserLang() {
+      const lang = (navigator.language || navigator.userLanguage).split('-')[0];
+      return ['de','en','es','fr','el','tr','ja','zh'].includes(lang) ? lang : 'en';
+    }
+
+    let currentLang = localStorage.getItem('lang') || getBrowserLang();
+
+    function updateContent() {
+      const t = translations[currentLang];
+      if (!t) return;
+      document.getElementById('title').innerHTML = t.title;
+      document.getElementById('experiment').innerHTML = t.experiment;
+      document.getElementById('counter').innerHTML = t.counter;
+      document.getElementById('pay-btn').innerHTML = t.payBtn;
+      document.getElementById('instructions').innerHTML = t.instructions;
+      document.getElementById('share-text').innerHTML = t.shareText;
+
+      const emailLinks = document.querySelectorAll('.email');
+      emailLinks.forEach(link => {
+        link.style.color = "#ff6b35";
+        link.style.textDecoration = "underline";
+        link.style.fontWeight = "bold";
+      });
+
+      const thoughts = document.getElementById('latest-thoughts');
+      thoughts.innerHTML = `
+        <div class="thought latest">${t.latestThoughts[0]}</div>
+        <div class="thought">${t.latestThoughts[1]}</div>
+        <div class="thought older">${t.latestThoughts[2]}</div>
+      `;
+    }
+
+    document.querySelectorAll('#lang-switch a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentLang = a.dataset.lang;
+        localStorage.setItem('lang', currentLang);
+        updateContent();
+      });
+    });
+
+    updateContent();
+  </script>
+</body>
+</html>
