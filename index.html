@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="A social media experiment: Can 10,000 people pay $5 for something with no personal value — except being part of a shared human thought?">
+  <meta name="description" content="A social media experiment: Can 10,000 people pay $7 — the number of luck and wholeness — for something with no personal value except being part of a shared human thought?">
   <link rel="canonical" href="https://eikonologia.github.io/yourthought/">
   <title>Your Thought</title>
   <style>
@@ -40,11 +40,11 @@
     }
     .btn:hover {
       transform: scale(1.03);
-      background: #ff6b35; /* warmes Orange */
+      background: #ff6b35;
       color: white;
     }
     .btn-pong {
-      background: #ff6b35; /* Play Pong = orange */
+      background: #ff6b35;
       color: white;
     }
     .btn-pong:hover {
@@ -87,7 +87,7 @@
       transition: background 0.2s;
     }
     .thought-item:hover {
-      background: rgba(255,107,53,0.1); /* leichtes Orange bei Hover */
+      background: rgba(255,107,53,0.1);
     }
     .lang-switch {
       margin: 25px 0;
@@ -123,16 +123,18 @@
   
   <div class="experiment" id="experiment">
     This is a social media experiment:<br>
-    Can 10,000 people pay $5 for something that gives them nothing back —<br>
+    Can 10,000 people pay $7 — the number of luck and wholeness —<br>
+    for something that gives them nothing back,<br>
     except a permanent place in a shared human thought?
   </div>
 
   <div class="counter" id="counter"><strong>9,999 thoughts remaining</strong></div>
 
-  <a href="https://buy.stripe.com/14A00i5XqcK52D91l0bQY00" target="_blank" class="btn" id="pay-btn">Secure your place — $5</a>
+  <!-- ⚠️ ERSETZE DIESEN LINK MIT DEINEM NEUEN STRIPE-LINK FÜR $7 -->
+  <a href="https://buy.stripe.com/DEIN_NEUER_LINK_HIER" target="_blank" class="btn" id="pay-btn">Secure your place — $7</a>
 
   <div class="instructions" id="instructions">
-    After payment, email your thought to <span class="email">photo@eikonologia.com</span> to have it added permanently.
+    After payment, email your thought to <a href="mailto:photo@eikonologia.com?subject=My Thought for Your Thought" class="email">photo@eikonologia.com</a> to have it added permanently.
   </div>
 
   <div class="thoughts-grid" id="thoughts-grid">
@@ -158,7 +160,7 @@
   </footer>
 
   <script>
-    // Mobile-fähiges Pong mit Level alle 3 Punkte
+    // Mobile-optimiertes Pong: langsamer, zentriert, besser für Handy
     function openPong() {
       const pongHTML = `
         <!DOCTYPE html>
@@ -177,17 +179,47 @@
           <script>
             const canvas = document.getElementById('pong');
             const ctx = canvas.getContext('2d');
+            
+            // Auf Handy: kleineres Spielfeld (60% der Höhe, zentriert)
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const playHeight = isMobile ? window.innerHeight * 0.6 : window.innerHeight;
+            const offsetY = isMobile ? (window.innerHeight - playHeight) / 2 : 0;
+
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
             let score = 0;
             let highscore = localStorage.getItem('pongHighscore') || 0;
             let speedLevel = 1;
-            const paddleHeight = 100;
-            const paddleWidth = 10;
-            const ballSize = 10;
-            const player = { x: 20, y: canvas.height/2 - paddleHeight/2, width: paddleWidth, height: paddleHeight, speed: 8 };
-            const ai = { x: canvas.width - 30, y: canvas.height/2 - paddleHeight/2, width: paddleWidth, height: paddleHeight, speed: 6 };
-            const ball = { x: canvas.width/2, y: canvas.height/2, size: ballSize, dx: 5, dy: 3 };
+            const paddleHeight = isMobile ? 120 : 100;
+            const paddleWidth = 12;
+            const ballSize = 12;
+            // Spieler links
+            const player = { 
+              x: 20, 
+              y: playHeight/2 - paddleHeight/2 + offsetY, 
+              width: paddleWidth, 
+              height: paddleHeight, 
+              speed: isMobile ? 12 : 8 
+            };
+            // KI rechts
+            const ai = { 
+              x: canvas.width - 32, 
+              y: playHeight/2 - paddleHeight/2 + offsetY, 
+              width: paddleWidth, 
+              height: paddleHeight, 
+              speed: isMobile ? 7 : 6 
+            };
+            // Ball langsamer auf Handy
+            const baseDx = isMobile ? 3.5 : 5;
+            const baseDy = isMobile ? 2.5 : 3;
+            const ball = { 
+              x: canvas.width/2, 
+              y: canvas.height/2, 
+              size: ballSize, 
+              dx: baseDx, 
+              dy: baseDy 
+            };
 
             let keys = {};
             window.addEventListener('keydown', e => keys[e.key] = true);
@@ -210,27 +242,27 @@
 
             canvas.addEventListener('mousedown', e => {
               const clickY = e.clientY;
-              if (clickY < canvas.height / 2) player.y -= 50;
-              else player.y += 50;
+              if (clickY < canvas.height / 2) player.y -= 60;
+              else player.y += 60;
             });
 
             function update() {
               speedLevel = Math.floor(score / 3) + 1;
-              ball.dx = (ball.dx > 0 ? 1 : -1) * (5 + speedLevel * 0.8);
-              ball.dy = (ball.dy > 0 ? 1 : -1) * (3 + speedLevel * 0.5);
+              ball.dx = (ball.dx > 0 ? 1 : -1) * (baseDx + speedLevel * 0.5);
+              ball.dy = (ball.dy > 0 ? 1 : -1) * (baseDy + speedLevel * 0.3);
 
               if (keys['ArrowUp'] || keys['w']) player.y -= player.speed;
               if (keys['ArrowDown'] || keys['s']) player.y += player.speed;
-              player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
+              player.y = Math.max(offsetY, Math.min(offsetY + playHeight - player.height, player.y));
 
               const aiCenter = ai.y + ai.height/2;
-              if (aiCenter < ball.y - 10) ai.y += ai.speed + speedLevel * 0.3;
-              if (aiCenter > ball.y + 10) ai.y -= ai.speed + speedLevel * 0.3;
-              ai.y = Math.max(0, Math.min(canvas.height - ai.height, ai.y));
+              if (aiCenter < ball.y - 15) ai.y += ai.speed + speedLevel * 0.2;
+              if (aiCenter > ball.y + 15) ai.y -= ai.speed + speedLevel * 0.2;
+              ai.y = Math.max(offsetY, Math.min(offsetY + playHeight - ai.height, ai.y));
 
               ball.x += ball.dx;
               ball.y += ball.dy;
-              if (ball.y <= 0 || ball.y >= canvas.height - ball.size) ball.dy *= -1;
+              if (ball.y <= offsetY || ball.y >= offsetY + playHeight - ball.size) ball.dy *= -1;
 
               if (ball.x <= player.x + player.width && 
                   ball.y >= player.y && 
@@ -258,11 +290,15 @@
 
               ctx.fillStyle = '#000';
               ctx.fillRect(0, 0, canvas.width, canvas.height);
+              // Spielfeld-Rahmen (optional)
+              ctx.strokeStyle = '#333';
+              ctx.strokeRect(0, offsetY, canvas.width, playHeight);
               ctx.fillStyle = '#fff';
               ctx.fillRect(player.x, player.y, player.width, player.height);
               ctx.fillRect(ai.x, ai.y, ai.width, ai.height);
               ctx.fillRect(ball.x, ball.y, ball.size, ball.size);
               ctx.font = '20px monospace';
+              ctx.fillStyle = '#fff';
               ctx.fillText('Score: ' + score + ' | High: ' + highscore + ' | Lvl: ' + speedLevel, 20, 30);
 
               requestAnimationFrame(update);
@@ -283,63 +319,63 @@
       win.document.close();
     }
 
-    // Übersetzungen (mit "social media experiment")
+    // Übersetzungen mit $7 und Glückszahl
     const translations = {
       de: {
         title: "Dein Gedanke",
-        experiment: "Dies ist ein Social-Media-Experiment:<br>Können 10.000 Menschen 5 $ zahlen –<br>für etwas, das ihnen nichts zurückgibt,<br>außer einem dauerhaften Platz in einem gemeinsamen menschlichen Gedanken?",
+        experiment: "Dies ist ein Social-Media-Experiment:<br>Können 10.000 Menschen 7 $ zahlen –<br>die Zahl des Glücks und der Ganzheit –<br>für etwas, das ihnen nichts zurückgibt,<br>außer einem dauerhaften Platz in einem gemeinsamen menschlichen Gedanken?",
         counter: "<strong>Noch 9.999 Gedanken frei</strong>",
-        payBtn: "Platz sichern — 5 $",
-        instructions: "Sende deinen Gedanken nach der Zahlung per E-Mail an <span class='email'>photo@eikonologia.com</span>, um ihn dauerhaft hinzuzufügen."
+        payBtn: "Platz sichern — 7 $",
+        instructions: "Sende deinen Gedanken nach der Zahlung per E-Mail an <a href='mailto:photo@eikonologia.com?subject=Mein Gedanke für Your Thought' class='email'>photo@eikonologia.com</a>, um ihn dauerhaft hinzuzufügen."
       },
       en: {
         title: "Your Thought",
-        experiment: "This is a social media experiment:<br>Can 10,000 people pay $5 for something that gives them nothing back —<br>except a permanent place in a shared human thought?",
+        experiment: "This is a social media experiment:<br>Can 10,000 people pay $7 — the number of luck and wholeness —<br>for something that gives them nothing back,<br>except a permanent place in a shared human thought?",
         counter: "<strong>9,999 thoughts remaining</strong>",
-        payBtn: "Secure your place — $5",
-        instructions: "After payment, email your thought to <span class='email'>photo@eikonologia.com</span> to have it added permanently."
+        payBtn: "Secure your place — $7",
+        instructions: "After payment, email your thought to <a href='mailto:photo@eikonologia.com?subject=My Thought for Your Thought' class='email'>photo@eikonologia.com</a> to have it added permanently."
       },
       es: {
         title: "Tu Pensamiento",
-        experiment: "Este es un experimento en redes sociales:<br>¿Pueden 10.000 personas pagar 5 $ por algo que no les da nada a cambio,<br>excepto un lugar permanente en un pensamiento humano compartido?",
+        experiment: "Este es un experimento en redes sociales:<br>¿Pueden 10.000 personas pagar 7 $ — el número de la suerte y la plenitud —<br>por algo que no les da nada a cambio,<br>excepto un lugar permanente en un pensamiento humano compartido?",
         counter: "<strong>Quedan 9.999 pensamientos</strong>",
-        payBtn: "Asegura tu lugar — 5 $",
-        instructions: "Después del pago, envía tu pensamiento por correo a <span class='email'>photo@eikonologia.com</span> para que se añada permanentemente."
+        payBtn: "Asegura tu lugar — 7 $",
+        instructions: "Después del pago, envía tu pensamiento por correo a <a href='mailto:photo@eikonologia.com?subject=Mi pensamiento para Your Thought' class='email'>photo@eikonologia.com</a> para que se añada permanentemente."
       },
       fr: {
         title: "Ta Pensée",
-        experiment: "Ceci est une expérience sur les réseaux sociaux :<br>10 000 personnes peuvent-elles payer 5 $ pour quelque chose qui ne leur rapporte rien,<br>sauf une place permanente dans une pensée humaine partagée ?",
+        experiment: "Ceci est une expérience sur les réseaux sociaux :<br>10 000 personnes peuvent-elles payer 7 $ — le chiffre de la chance et de l’accomplissement —<br>pour quelque chose qui ne leur rapporte rien,<br>sauf une place permanente dans une pensée humaine partagée ?",
         counter: "<strong>9 999 pensées restantes</strong>",
-        payBtn: "Réserve ta place — 5 $",
-        instructions: "Après le paiement, envoie ta pensée par e-mail à <span class='email'>photo@eikonologia.com</span> pour qu’elle soit ajoutée de façon permanente."
+        payBtn: "Réserve ta place — 7 $",
+        instructions: "Après le paiement, envoie ta pensée par e-mail à <a href='mailto:photo@eikonologia.com?subject=Ma pensée pour Your Thought' class='email'>photo@eikonologia.com</a> pour qu’elle soit ajoutée de façon permanente."
       },
       el: {
         title: "Η Σκέψη Σου",
-        experiment: "Αυτό είναι ένα πείραμα στα social media:<br>Μπορούν 10.000 άνθρωποι να πληρώσουν 5 $ για κάτι που δεν τους δίνει τίποτα,<br>εκτός από μια μόνιμη θέση σε μια κοινή ανθρώπινη σκέψη;",
+        experiment: "Αυτό είναι ένα πείραμα στα social media:<br>Μπορούν 10.000 άνθρωποι να πληρώσουν 7 $ — ο αριθμός της τύχης και της πληρότητας —<br>για κάτι που δεν τους δίνει τίποτα,<br>εκτός από μια μόνιμη θέση σε μια κοινή ανθρώπινη σκέψη;",
         counter: "<strong>Απομένουν 9.999 σκέψεις</strong>",
-        payBtn: "Δέσμευσε τη θέση σου — 5 $",
-        instructions: "Μετά την πληρωμή, στείλε τη σκέψη σου με email στο <span class='email'>photo@eikonologia.com</span> για να προστεθεί μόνιμα."
+        payBtn: "Δέσμευσε τη θέση σου — 7 $",
+        instructions: "Μετά την πληρωμή, στείλε τη σκέψη σου με email στο <a href='mailto:photo@eikonologia.com?subject=Η σκέψη μου για το Your Thought' class='email'>photo@eikonologia.com</a> για να προστεθεί μόνιμα."
       },
       tr: {
         title: "Düşüncen",
-        experiment: "Bu bir sosyal medya deneyidir:<br>10.000 kişi, karşılığında hiçbir şey almadan,<br>ortak bir insan düşüncesinde kalıcı bir yer için 5 $ ödeyebilir mi?",
+        experiment: "Bu bir sosyal medya deneyidir:<br>10.000 kişi, karşılığında hiçbir şey almadan,<br>ortak bir insan düşüncesinde kalıcı bir yer için<br>7 $ — şans ve bütünlüğün sayısı — ödeyebilir mi?",
         counter: "<strong>9.999 düşünce kaldı</strong>",
-        payBtn: "Yerini güvence altına al — 5 $",
-        instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <span class='email'>photo@eikonologia.com</span> adresine e-posta gönder."
+        payBtn: "Yerini güvence altına al — 7 $",
+        instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <a href='mailto:photo@eikonologia.com?subject=Düşüncem Your Thought için' class='email'>photo@eikonologia.com</a> adresine e-posta gönder."
       },
       ja: {
         title: "あなたの思考",
-        experiment: "これはソーシャルメディア実験です：<br>10,000人が、見返りなしで、<br>共有された人間の思考の中に永久的な場所を得るために5ドルを払えるでしょうか？",
+        experiment: "これはソーシャルメディア実験です：<br>10,000人が、見返りなしで、<br>共有された人間の思考の中に永久的な場所を得るために<br>7ドル（幸運と完全性の数字）を払えるでしょうか？",
         counter: "<strong>残り9,999の思考</strong>",
-        payBtn: "あなたの場所を確保 — 5ドル",
-        instructions: "支払い後、あなたの思考を永久に追加するために、<span class='email'>photo@eikonologia.com</span> までメールしてください。"
+        payBtn: "あなたの場所を確保 — 7ドル",
+        instructions: "支払い後、あなたの思考を永久に追加するために、<a href='mailto:photo@eikonologia.com?subject=Your Thoughtへの私の思考' class='email'>photo@eikonologia.com</a> までメールしてください。"
       },
       zh: {
         title: "你的想法",
-        experiment: "这是一个社交媒体实验：<br>10,000人是否愿意支付5美元，<br>只为在人类共同的思想中获得一个永久的位置，而别无回报？",
+        experiment: "这是一个社交媒体实验：<br>10,000人是否愿意支付7美元——<br>幸运与圆满的数字——<br>只为在人类共同的思想中获得一个永久的位置，而别无回报？",
         counter: "<strong>还剩 9,999 个想法</strong>",
-        payBtn: "锁定你的位置 — 5 美元",
-        instructions: "付款后，请将你的想法通过电子邮件发送至 <span class='email'>photo@eikonologia.com</span>，我们将永久添加它。"
+        payBtn: "锁定你的位置 — 7 美元",
+        instructions: "付款后，请将你的想法通过电子邮件发送至 <a href='mailto:photo@eikonologia.com?subject=我的想法 for Your Thought' class='email'>photo@eikonologia.com</a>，我们将永久添加它。"
       }
     };
 
@@ -352,22 +388,18 @@
 
     function updateContent() {
       const t = translations[currentLang];
-      document.getElementById('title').textContent = t.title;
+      document.getElementById('title').innerHTML = t.title;
       document.getElementById('experiment').innerHTML = t.experiment;
       document.getElementById('counter').innerHTML = t.counter;
-      document.getElementById('pay-btn').textContent = t.payBtn;
+      document.getElementById('pay-btn').innerHTML = t.payBtn;
       document.getElementById('instructions').innerHTML = t.instructions;
 
-      const emailSpan = document.querySelector('.email');
-      if (emailSpan) {
-        emailSpan.textContent = "photo@eikonologia.com";
-        emailSpan.style.color = "#ff6b35";
-        emailSpan.style.textDecoration = "underline";
-        emailSpan.style.fontWeight = "bold";
-      }
-
-      document.querySelectorAll('#lang-switch a').forEach(a => {
-        a.classList.toggle('active', a.dataset.lang === currentLang);
+      // Stil für E-Mail-Links wiederherstellen
+      const emailLinks = document.querySelectorAll('.email');
+      emailLinks.forEach(link => {
+        link.style.color = "#ff6b35";
+        link.style.textDecoration = "underline";
+        link.style.fontWeight = "bold";
       });
     }
 
