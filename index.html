@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="A social media experiment: Can 10,000 people pay $7 — the number of luck and wholeness — for something with no personal value except being part of a shared human thought?">
   
-  <!-- Open Graph -->
+  <!-- Open Graph / Social Media Preview -->
   <meta property="og:title" content="Your Thought">
+  <meta property="og:description" content="A social media experiment: Can 10,000 people pay $7 — the number of luck and wholeness — for something with no personal value except being part of a shared human thought?">
   <meta property="og:image" content="https://raw.githubusercontent.com/eikonologia/yourthought/main/yourthought.jpg">
   <meta property="og:url" content="https://eikonologia.github.io/yourthought/">
   <meta property="og:type" content="website">
@@ -91,7 +92,7 @@
       line-height: 1.6;
     }
 
-    /* Gedanken – gestaffelt */
+    /* Letzte 3 Gedanken – gestaffelt */
     .latest-thoughts {
       max-width: 600px;
       margin: 30px auto;
@@ -103,7 +104,6 @@
       padding: 10px;
       background: rgba(255,255,255,0.03);
       border-radius: 8px;
-      transition: opacity 0.2s;
     }
     .thought.latest {
       font-size: 1.7rem;
@@ -126,8 +126,10 @@
       text-decoration: underline;
     }
 
-    /* Farbige Social-Media-Buttons */
-    .share-section { margin: 35px 0; }
+    /* Farbige Social-Media-Buttons – nur Facebook, Instagram, TikTok */
+    .share-section {
+      margin: 35px 0;
+    }
     .share-text {
       margin-bottom: 15px;
       font-size: 1.1rem;
@@ -138,23 +140,25 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 16px;
-      max-width: 500px;
+      max-width: 400px;
       margin: 0 auto;
     }
     .share-btn {
       width: 52px;
       height: 52px;
-      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
       transition: transform 0.2s;
+      position: relative;
     }
     .share-btn:hover {
       transform: scale(1.12);
     }
-    .share-btn svg { pointer-events: none; }
+    .share-btn svg {
+      pointer-events: none;
+    }
 
     footer {
       margin-top: 50px;
@@ -218,36 +222,39 @@
 
   <a href="all-thoughts.html" class="archive-link">View all thoughts →</a>
 
-  <!-- Farbige Social-Media-Buttons -->
+  <!-- Nur Facebook, Instagram (modern), TikTok -->
   <div class="share-section">
     <div class="share-text">
       To make this experiment a success, I need YOUR thought.<br>
       Share it with someone who might add theirs.
     </div>
     <div class="share-buttons">
+      <!-- Facebook -->
       <a href="https://www.facebook.com/sharer/sharer.php?u=https://eikonologia.github.io/yourthought/" class="share-btn" target="_blank" title="Facebook" style="background:#1877F2;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
           <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.667H7.938V13h2.5V11c0-2.483 1.517-3.83 3.75-3.83h1.75V9.5h-1.75c-.69 0-1.25.56-1.25 1.25v1.75h2.5l-.313 2.5h-2.188v6.667C18.343 21.128 22 16.991 22 12z"/>
         </svg>
       </a>
-      <a href="https://www.instagram.com/" class="share-btn" target="_blank" title="Instagram" style="background:linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
-          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 110-16 8 8 0 010 16zm4-9a4 4 0 10-8 0 4 4 0 008 0zm-4 2a2 2 0 100-4 2 2 0 000 4z"/>
+      <!-- Instagram – modernes farbiges Logo -->
+      <a href="https://www.instagram.com/" class="share-btn" target="_blank" title="Instagram" style="background:white; border: 2px solid #833ab4; border-radius: 14px; overflow: hidden;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+          <radialGradient id="ig-grad" cx="34.575%" cy="66.163%" r="100%" fx="34.575%" fy="66.163%">
+            <stop offset="0%" stop-color="#FEDA77"/>
+            <stop offset="20.69%" stop-color="#FA779A"/>
+            <stop offset="41.38%" stop-color="#F54E91"/>
+            <stop offset="62.07%" stop-color="#CB5CBA"/>
+            <stop offset="82.76%" stop-color="#9665D4"/>
+            <stop offset="100%" stop-color="#6A7BDB"/>
+          </radialGradient>
+          <rect width="24" height="24" fill="url(#ig-grad)" rx="6"/>
+          <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm0 6a2 2 0 110-4 2 2 0 010 4z" fill="white"/>
+          <circle cx="16.5" cy="7.5" r="1" fill="white"/>
         </svg>
       </a>
+      <!-- TikTok -->
       <a href="https://www.tiktok.com/" class="share-btn" target="_blank" title="TikTok" style="background:#000000;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
           <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.25.71-.29 1.5-.08 2.24.3 1.02 1.12 1.87 2.12 2.28 1.05.41 2.23.41 3.28 0 .95-.35 1.75-1.05 2.13-2 .39-1.02.39-2.15 0-3.17-.13-.34-.27-.67-.44-1 .01-2.92 0-5.84 0-8.75z"/>
-        </svg>
-      </a>
-      <a href="https://wa.me/?text=Join%20the%20Your%20Thought%20experiment%3A%20https://eikonologia.github.io/yourthought/" class="share-btn" target="_blank" title="WhatsApp" style="background:#25D366;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-        </svg>
-      </a>
-      <a href="https://twitter.com/intent/tweet?url=https://eikonologia.github.io/yourthought/&text=Join%20the%20Your%20Thought%20experiment" class="share-btn" target="_blank" title="Twitter/X" style="background:#000000;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
-          <path d="M18.205 2.25h-12.3a.75.75 0 00-.75.75v18a.75.75 0 001.254.598l5.25-4.83 5.25 4.83a.75.75 0 001.254-.598v-18a.75.75 0 00-.75-.75zm-5.55 15.32L8.25 13.5v-9h4.5v9l4.405 4.072-4.405 4.072z"/>
         </svg>
       </a>
     </div>
@@ -261,10 +268,111 @@
   </footer>
 
   <script>
-    // Pong (wie vorher – unverändert)
-    function openPong() { /* ... */ }
+    // Pong-Spiel (handyoptimiert, Level alle 3 Punkte)
+    function openPong() {
+      const pongHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Pong</title>
+          <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+          <style>
+            * { margin:0; padding:0; }
+            body { background:#000; overflow:hidden; touch-action:none; }
+            canvas { display:block; }
+          </style>
+        </head>
+        <body>
+          <canvas id="pong"></canvas>
+          <script>
+            const canvas = document.getElementById('pong');
+            const ctx = canvas.getContext('2d');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const playHeight = isMobile ? window.innerHeight * 0.6 : window.innerHeight;
+            const offsetY = isMobile ? (window.innerHeight - playHeight) / 2 : 0;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let score = 0;
+            let highscore = localStorage.getItem('pongHighscore') || 0;
+            let speedLevel = 1;
+            const paddleHeight = isMobile ? 120 : 100;
+            const paddleWidth = 12;
+            const ballSize = 12;
+            const player = { x: 20, y: playHeight/2 - paddleHeight/2 + offsetY, width: paddleWidth, height: paddleHeight, speed: isMobile ? 12 : 8 };
+            const ai = { x: canvas.width - 32, y: playHeight/2 - paddleHeight/2 + offsetY, width: paddleWidth, height: paddleHeight, speed: isMobile ? 7 : 6 };
+            const baseDx = isMobile ? 3.5 : 5;
+            const baseDy = isMobile ? 2.5 : 3;
+            const ball = { x: canvas.width/2, y: canvas.height/2, size: ballSize, dx: baseDx, dy: baseDy };
 
-    // Übersetzungen – inkl. Gedanken-Texte
+            let keys = {};
+            window.addEventListener('keydown', e => keys[e.key] = true);
+            window.addEventListener('keyup', e => keys[e.key] = false);
+
+            let touchY = null;
+            canvas.addEventListener('touchstart', e => { e.preventDefault(); touchY = e.touches[0].clientY; });
+            canvas.addEventListener('touchmove', e => { e.preventDefault(); if (touchY !== null) { const diff = e.touches[0].clientY - touchY; player.y += diff; touchY = e.touches[0].clientY; } });
+            canvas.addEventListener('touchend', () => touchY = null);
+            canvas.addEventListener('mousedown', e => { const clickY = e.clientY; if (clickY < canvas.height / 2) player.y -= 60; else player.y += 60; });
+
+            function update() {
+              speedLevel = Math.floor(score / 3) + 1;
+              ball.dx = (ball.dx > 0 ? 1 : -1) * (baseDx + speedLevel * 0.5);
+              ball.dy = (ball.dy > 0 ? 1 : -1) * (baseDy + speedLevel * 0.3);
+              if (keys['ArrowUp'] || keys['w']) player.y -= player.speed;
+              if (keys['ArrowDown'] || keys['s']) player.y += player.speed;
+              player.y = Math.max(offsetY, Math.min(offsetY + playHeight - player.height, player.y));
+              const aiCenter = ai.y + ai.height/2;
+              if (aiCenter < ball.y - 15) ai.y += ai.speed + speedLevel * 0.2;
+              if (aiCenter > ball.y + 15) ai.y -= ai.speed + speedLevel * 0.2;
+              ai.y = Math.max(offsetY, Math.min(offsetY + playHeight - ai.height, ai.y));
+              ball.x += ball.dx;
+              ball.y += ball.dy;
+              if (ball.y <= offsetY || ball.y >= offsetY + playHeight - ball.size) ball.dy *= -1;
+              if (ball.x <= player.x + player.width && ball.y >= player.y && ball.y <= player.y + player.height) {
+                ball.dx = Math.abs(ball.dx);
+                score++;
+              }
+              if (ball.x >= ai.x - ball.size && ball.y >= ai.y && ball.y <= ai.y + ai.height) {
+                ball.dx = -Math.abs(ball.dx);
+              }
+              if (ball.x < 0) {
+                ball.x = canvas.width/2;
+                ball.y = canvas.height/2;
+                if (score > highscore) {
+                  highscore = score;
+                  localStorage.setItem('pongHighscore', highscore);
+                }
+                score = 0;
+                speedLevel = 1;
+              }
+              ctx.fillStyle = '#000';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              ctx.strokeStyle = '#333';
+              ctx.strokeRect(0, offsetY, canvas.width, playHeight);
+              ctx.fillStyle = '#fff';
+              ctx.fillRect(player.x, player.y, player.width, player.height);
+              ctx.fillRect(ai.x, ai.y, ai.width, ai.height);
+              ctx.fillRect(ball.x, ball.y, ball.size, ball.size);
+              ctx.font = '20px monospace';
+              ctx.fillStyle = '#fff';
+              ctx.fillText('Score: ' + score + ' | High: ' + highscore + ' | Lvl: ' + speedLevel, 20, 30);
+              requestAnimationFrame(update);
+            }
+            window.addEventListener('resize', () => {
+              canvas.width = window.innerWidth;
+              canvas.height = window.innerHeight;
+            });
+            update();
+          <\/script>
+        </body>
+        </html>
+      `;
+      const win = window.open();
+      win.document.write(pongHTML);
+      win.document.close();
+    }
+
+    // Übersetzungen – inkl. Gedanken
     const translations = {
       en: {
         title: "Your Thought",
@@ -290,14 +398,102 @@
           '#0001 "Ich war hier."'
         ]
       },
-      // ... (andere Sprachen analog)
+      es: {
+        title: "Tu Pensamiento",
+        experiment: "Este es un experimento en redes sociales:<br>¿Pueden 10.000 personas pagar 7 $ — el número de la suerte y la plenitud —<br>por algo que no les da nada a cambio,<br>excepto un lugar permanente en un pensamiento humano compartido?",
+        counter: "<strong>Quedan 9.999 pensamientos</strong>",
+        payBtn: "Asegura tu lugar — 7 $",
+        instructions: "Después del pago, envía tu pensamiento por correo a <a href='mailto:photo@eikonologia.com?subject=Mi pensamiento para Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> para que se añada permanentemente.",
+        latestThoughts: [
+          '#0003 "Esto importa." — Alex',
+          '#0002 "No estás solo."',
+          '#0001 "Existí."'
+        ]
+      },
+      fr: {
+        title: "Ta Pensée",
+        experiment: "Ceci est une expérience sur les réseaux sociaux :<br>10 000 personnes peuvent-elles payer 7 $ — le chiffre de la chance et de l’accomplissement —<br>pour quelque chose qui ne leur rapporte rien,<br>sauf une place permanente dans une pensée humaine partagée ?",
+        counter: "<strong>9 999 pensées restantes</strong>",
+        payBtn: "Réserve ta place — 7 $",
+        instructions: "Après le paiement, envoie ta pensée par e-mail à <a href='mailto:photo@eikonologia.com?subject=Ma pensée pour Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> pour qu’elle soit ajoutée de façon permanente.",
+        latestThoughts: [
+          '#0003 "Cela compte." — Alex',
+          '#0002 "Tu n’es pas seul."',
+          '#0001 "J’ai existé."'
+        ]
+      },
+      el: {
+        title: "Η Σκέψη Σου",
+        experiment: "Αυτό είναι ένα πείραμα στα social media:<br>Μπορούν 10.000 άνθρωποι να πληρώσουν 7 $ — ο αριθμός της τύχης και της πληρότητας —<br>για κάτι που δεν τους δίνει τίποτα,<br>εκτός από μια μόνιμη θέση σε μια κοινή ανθρώπινη σκέψη;",
+        counter: "<strong>Απομένουν 9.999 σκέψεις</strong>",
+        payBtn: "Δέσμευσε τη θέση σου — 7 $",
+        instructions: "Μετά την πληρωμή, στείλε τη σκέψη σου με email στο <a href='mailto:photo@eikonologia.com?subject=Η σκέψη μου για το Your Thought' class='email' target='_blank'>photo@eikonologia.com</a> για να προστεθεί μόνιμα.",
+        latestThoughts: [
+          '#0003 "Αυτό έχει σημασία." — Αλέξ',
+          '#0002 "Δεν είσαι μόνος."',
+          '#0001 "Υπήρξα."'
+        ]
+      },
+      tr: {
+        title: "Düşüncen",
+        experiment: "Bu bir sosyal medya deneyidir:<br>10.000 kişi, karşılığında hiçbir şey almadan,<br>ortak bir insan düşüncesinde kalıcı bir yer için<br>7 $ — şans ve bütünlüğün sayısı — ödeyebilir mi?",
+        counter: "<strong>9.999 düşünce kaldı</strong>",
+        payBtn: "Yerini güvence altına al — 7 $",
+        instructions: "Ödeme yaptıktan sonra düşünceni kalıcı olarak eklenmesi için <a href='mailto:photo@eikonologia.com?subject=Düşüncem Your Thought için' class='email' target='_blank'>photo@eikonologia.com</a> adresine e-posta gönder.",
+        latestThoughts: [
+          '#0003 "Bu önemli." — Alex',
+          '#0002 "Yalnız değilsin."',
+          '#0001 "Var oldum."'
+        ]
+      },
+      ja: {
+        title: "あなたの思考",
+        experiment: "これはソーシャルメディア実験です：<br>10,000人が、見返りなしで、<br>共有された人間の思考の中に永久的な場所を得るために<br>7ドル（幸運と完全性の数字）を払えるでしょうか？",
+        counter: "<strong>残り9,999の思考</strong>",
+        payBtn: "あなたの場所を確保 — 7ドル",
+        instructions: "支払い後、あなたの思考を永久に追加するために、<a href='mailto:photo@eikonologia.com?subject=Your Thoughtへの私の思考' class='email' target='_blank'>photo@eikonologia.com</a> までメールしてください。",
+        latestThoughts: [
+          '#0003 "これは大切だ。" — アレックス',
+          '#0002 "あなたはひとりじゃない。"',
+          '#0001 "私はいた。"'
+        ]
+      },
+      zh: {
+        title: "你的想法",
+        experiment: "这是一个社交媒体实验：<br>10,000人是否愿意支付7美元——<br>幸运与圆满的数字——<br>只为在人类共同的思想中获得一个永久的位置，而别无回报？",
+        counter: "<strong>还剩 9,999 个想法</strong>",
+        payBtn: "锁定你的位置 — 7 美元",
+        instructions: "付款后，请将你的想法通过电子邮件发送至 <a href='mailto:photo@eikonologia.com?subject=我的想法 for Your Thought' class='email' target='_blank'>photo@eikonologia.com</a>，我们将永久添加它。",
+        latestThoughts: [
+          '#0003 "这很重要。" — 亚历克斯',
+          '#0002 "你并不孤单。"',
+          '#0001 "我存在过。"'
+        ]
+      }
     };
+
+    function getBrowserLang() {
+      const lang = (navigator.language || navigator.userLanguage).split('-')[0];
+      return ['de','en','es','fr','el','tr','ja','zh'].includes(lang) ? lang : 'en';
+    }
+
+    let currentLang = localStorage.getItem('lang') || getBrowserLang();
 
     function updateContent() {
       const t = translations[currentLang];
       if (!t) return;
-      
-      // ... (Titel, Texte wie vorher)
+      document.getElementById('title').innerHTML = t.title;
+      document.getElementById('experiment').innerHTML = t.experiment;
+      document.getElementById('counter').innerHTML = t.counter;
+      document.getElementById('pay-btn').innerHTML = t.payBtn;
+      document.getElementById('instructions').innerHTML = t.instructions;
+
+      const emailLinks = document.querySelectorAll('.email');
+      emailLinks.forEach(link => {
+        link.style.color = "#ff6b35";
+        link.style.textDecoration = "underline";
+        link.style.fontWeight = "bold";
+      });
 
       // Gedanken aktualisieren
       const thoughts = document.getElementById('latest-thoughts');
@@ -308,7 +504,16 @@
       `;
     }
 
-    // ... (Rest des Sprachcodes wie vorher)
+    document.querySelectorAll('#lang-switch a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentLang = a.dataset.lang;
+        localStorage.setItem('lang', currentLang);
+        updateContent();
+      });
+    });
+
+    updateContent();
   </script>
 </body>
 </html>
